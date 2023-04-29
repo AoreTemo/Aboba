@@ -1,4 +1,4 @@
-﻿namespace librarian
+﻿namespace librarian.Positions
 {
     public enum Coordinates
     {

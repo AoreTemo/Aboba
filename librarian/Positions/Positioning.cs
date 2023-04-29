@@ -1,4 +1,6 @@
-﻿namespace librarian
+﻿using librarian.Positions;
+
+namespace librarian
 {
     internal static class Positioning
     {

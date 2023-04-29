@@ -10,6 +10,7 @@
             Size = new Size(width, height);
             Location = new Point(x, y);
             Click += button_Click;
+            Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿namespace librarian
+﻿using librarian.Panels;
+namespace librarian
 {
     public partial class BookPanel : UserControl
     {
         public InputPanel? editPanel;
         private Control EditPanelControl;
         private Control parent;
+        private AllInfoAboutBook AllInfo = new AllInfoAboutBook();
         public Book book = new Book();
         public BookPanel(string nameOfBook, string author, string publisher, string year,
                          string sector, string origin, string novelty, string genre, string grade,
@@ -27,7 +29,7 @@
             BookLabels_Init(other.book.NameOfBook, other.book.Author, other.book.Publisher, other.book.Year, other.book.Sector, other.book.Origin,
                 other.book.Novelty, other.book.GenreOfBook, other.book.Grade);
         }
-    
+
         private void Book_Initializator(string nameOfBook, string author, string publisher, string year,
                          string sector, string origin, string novelty, string genre, string grade)
         {
@@ -41,18 +43,24 @@
             int y = Positioning.PANEL_MARGIN_LEFT_TOP + Positioning.currentRow * (Positioning.PANEL_HEIGHT + Positioning.PANEL_MARGIN_LEFT_TOP);
             Location = new Point(x, y);
         }
-        private void BookLabels_Init(string? nameOfBook, string author, string publisher, string year,
+        private void BookLabels_Init(string nameOfBook, string author, string publisher, string year,
                             string sector, string origin, string novelty, string genre, string grade)
         {
-            if (nameOfBook != null) NameOfBookLabel.Text = nameOfBook;
-            if (author != null) AuthorLabel.Text = author;
-            if (publisher != null) PublisherLabel.Text = publisher;
-            if (year != null) YearLabel.Text = year;
-            if (sector != null) SectorLabel.Text = sector;
-            if (origin != null) OriginLabel.Text = origin;
-            if (novelty != null) NoveltyLabel.Text = novelty;
-            if (genre != null) GenreLabel.Text = genre;
-            if (grade != null) GradeLabel.Text = grade;
+            AllInfo.NameInfo.Text = nameOfBook.Length > 16 ? nameOfBook.Substring(0, 13) + "..." : nameOfBook;
+            AllInfo.AuthorInfo.Text = author.Length > 16 ? author.Substring(0, 13) + "..." : author;
+            AllInfo.PublisherInfo.Text = publisher.Length > 16 ? publisher.Substring(0, 13) + "..." : publisher;
+            AllInfo.YearInfo.Text = year;
+            AllInfo.SectorInfo.Text = sector;
+            AllInfo.OriginInfo.Text = origin;
+            AllInfo.NoveltyInfo.Text = novelty;
+            AllInfo.GenreInfo.Text = genre;
+            AllInfo.GradeInfo.Text = grade;
+
+            NameOfBookLabel.Text = nameOfBook.Length > 15 ? nameOfBook.Substring(0, 12) + "..." : nameOfBook;
+            AuthorLabel.Text = author.Length > 22 ? author.Substring(0, 19) + "..." : author;
+            PublisherLabel.Text = publisher.Length > 22 ? publisher.Substring(0, 19) + "..." : publisher;
+            GenreLabel.Text = genre;
+            YearLabel.Text = year;
         }
         private void editButton_Click(object sender, EventArgs e)
         {
@@ -89,6 +97,14 @@
             Form1.books.Remove(this);
             if (parent != null)
                 Form1.LocateBook(parent, Form1.books.OfType<Control>());
+        }
+
+        private void moreButton_Click(object sender, EventArgs e)
+        {
+            EditPanelControl.Controls.Add(AllInfo);
+            AllInfo.Location = new Point((EditPanelControl.Width - AllInfo.Width) / 2, (EditPanelControl.Height - AllInfo.Height) / 2);
+            AllInfo.BringToFront();
+            Form1.ControlSwitching(false, EditPanelControl, c => c != AllInfo && c.Parent != AllInfo);
         }
     }
 }

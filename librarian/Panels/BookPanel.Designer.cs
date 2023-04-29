@@ -34,20 +34,13 @@
             GenreLabel = new Label();
             Genre = new Label();
             editButton = new Button();
-            GradeLabel = new Label();
-            label10 = new Label();
-            NoveltyLabel = new Label();
-            label9 = new Label();
-            OriginLabel = new Label();
-            label7 = new Label();
-            SectorLabel = new Label();
-            label5 = new Label();
             YearLabel = new Label();
             label4 = new Label();
             PublisherLabel = new Label();
             label3 = new Label();
             AuthorLabel = new Label();
             label2 = new Label();
+            moreButton = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -55,7 +48,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(0, 1);
+            label1.Location = new Point(5, 26);
             label1.Name = "label1";
             label1.Size = new Size(56, 23);
             label1.TabIndex = 0;
@@ -65,7 +58,7 @@
             // 
             NameOfBookLabel.AutoSize = true;
             NameOfBookLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            NameOfBookLabel.Location = new Point(0, 23);
+            NameOfBookLabel.Location = new Point(5, 49);
             NameOfBookLabel.Name = "NameOfBookLabel";
             NameOfBookLabel.Size = new Size(112, 23);
             NameOfBookLabel.TabIndex = 1;
@@ -73,18 +66,11 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(moreButton);
             panel1.Controls.Add(GenreLabel);
             panel1.Controls.Add(Genre);
             panel1.Controls.Add(editButton);
-            panel1.Controls.Add(GradeLabel);
-            panel1.Controls.Add(label10);
             panel1.Controls.Add(label1);
-            panel1.Controls.Add(NoveltyLabel);
-            panel1.Controls.Add(label9);
-            panel1.Controls.Add(OriginLabel);
-            panel1.Controls.Add(label7);
-            panel1.Controls.Add(SectorLabel);
-            panel1.Controls.Add(label5);
             panel1.Controls.Add(YearLabel);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(NameOfBookLabel);
@@ -101,7 +87,7 @@
             // 
             GenreLabel.AutoSize = true;
             GenreLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            GenreLabel.Location = new Point(0, 253);
+            GenreLabel.Location = new Point(5, 233);
             GenreLabel.Name = "GenreLabel";
             GenreLabel.Size = new Size(96, 23);
             GenreLabel.TabIndex = 18;
@@ -111,7 +97,7 @@
             // 
             Genre.AutoSize = true;
             Genre.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            Genre.Location = new Point(2, 230);
+            Genre.Location = new Point(4, 210);
             Genre.Name = "Genre";
             Genre.Size = new Size(56, 23);
             Genre.TabIndex = 17;
@@ -127,92 +113,11 @@
             editButton.UseVisualStyleBackColor = true;
             editButton.Click += editButton_Click;
             // 
-            // GradeLabel
-            // 
-            GradeLabel.AutoSize = true;
-            GradeLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            GradeLabel.Location = new Point(104, 253);
-            GradeLabel.Name = "GradeLabel";
-            GradeLabel.Size = new Size(19, 23);
-            GradeLabel.TabIndex = 15;
-            GradeLabel.Text = "0";
-            GradeLabel.UseMnemonic = false;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label10.Location = new Point(102, 230);
-            label10.Name = "label10";
-            label10.Size = new Size(56, 23);
-            label10.TabIndex = 14;
-            label10.Text = "Grade";
-            // 
-            // NoveltyLabel
-            // 
-            NoveltyLabel.AutoSize = true;
-            NoveltyLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            NoveltyLabel.Location = new Point(102, 207);
-            NoveltyLabel.Name = "NoveltyLabel";
-            NoveltyLabel.Size = new Size(108, 23);
-            NoveltyLabel.TabIndex = 13;
-            NoveltyLabel.Text = "NoveltyLabel";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label9.Location = new Point(102, 184);
-            label9.Name = "label9";
-            label9.Size = new Size(68, 23);
-            label9.TabIndex = 12;
-            label9.Text = "Novelty";
-            // 
-            // OriginLabel
-            // 
-            OriginLabel.AutoSize = true;
-            OriginLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            OriginLabel.Location = new Point(0, 207);
-            OriginLabel.Name = "OriginLabel";
-            OriginLabel.Size = new Size(97, 23);
-            OriginLabel.TabIndex = 11;
-            OriginLabel.Text = "OriginLabel";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label7.Location = new Point(0, 184);
-            label7.Name = "label7";
-            label7.Size = new Size(57, 23);
-            label7.TabIndex = 10;
-            label7.Text = "Origin";
-            // 
-            // SectorLabel
-            // 
-            SectorLabel.AutoSize = true;
-            SectorLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            SectorLabel.Location = new Point(102, 161);
-            SectorLabel.Name = "SectorLabel";
-            SectorLabel.Size = new Size(98, 23);
-            SectorLabel.TabIndex = 9;
-            SectorLabel.Text = "SectorLabel";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.Location = new Point(102, 138);
-            label5.Name = "label5";
-            label5.Size = new Size(58, 23);
-            label5.TabIndex = 8;
-            label5.Text = "Sector";
-            // 
             // YearLabel
             // 
             YearLabel.AutoSize = true;
             YearLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            YearLabel.Location = new Point(0, 161);
+            YearLabel.Location = new Point(5, 141);
             YearLabel.Name = "YearLabel";
             YearLabel.Size = new Size(82, 23);
             YearLabel.TabIndex = 7;
@@ -222,7 +127,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.Location = new Point(0, 138);
+            label4.Location = new Point(5, 118);
             label4.Name = "label4";
             label4.Size = new Size(42, 23);
             label4.TabIndex = 6;
@@ -232,7 +137,8 @@
             // 
             PublisherLabel.AutoSize = true;
             PublisherLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            PublisherLabel.Location = new Point(0, 115);
+            PublisherLabel.ForeColor = SystemColors.ControlDarkDark;
+            PublisherLabel.Location = new Point(5, 187);
             PublisherLabel.Name = "PublisherLabel";
             PublisherLabel.Size = new Size(120, 23);
             PublisherLabel.TabIndex = 5;
@@ -242,7 +148,8 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(0, 92);
+            label3.ForeColor = SystemColors.ControlDarkDark;
+            label3.Location = new Point(5, 164);
             label3.Name = "label3";
             label3.Size = new Size(80, 23);
             label3.TabIndex = 4;
@@ -252,7 +159,8 @@
             // 
             AuthorLabel.AutoSize = true;
             AuthorLabel.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            AuthorLabel.Location = new Point(0, 69);
+            AuthorLabel.ForeColor = SystemColors.ControlDarkDark;
+            AuthorLabel.Location = new Point(5, 95);
             AuthorLabel.Name = "AuthorLabel";
             AuthorLabel.Size = new Size(103, 23);
             AuthorLabel.TabIndex = 3;
@@ -262,11 +170,22 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(0, 46);
+            label2.ForeColor = SystemColors.ControlDarkDark;
+            label2.Location = new Point(5, 72);
             label2.Name = "label2";
             label2.Size = new Size(63, 23);
             label2.TabIndex = 0;
             label2.Text = "Author";
+            // 
+            // moreButton
+            // 
+            moreButton.Location = new Point(131, 39);
+            moreButton.Name = "moreButton";
+            moreButton.Size = new Size(65, 29);
+            moreButton.TabIndex = 19;
+            moreButton.Text = "more";
+            moreButton.UseVisualStyleBackColor = true;
+            moreButton.Click += moreButton_Click;
             // 
             // BookPanel
             // 
@@ -294,17 +213,10 @@
         private Label AuthorLabel;
         private Label label2;
         public Button editButton;
-        private Label GradeLabel;
-        private Label label10;
-        private Label NoveltyLabel;
-        private Label label9;
-        private Label OriginLabel;
-        private Label label7;
-        private Label SectorLabel;
-        private Label label5;
         private Label YearLabel;
         private Label label4;
         private Label GenreLabel;
         private Label Genre;
+        public Button moreButton;
     }
 }

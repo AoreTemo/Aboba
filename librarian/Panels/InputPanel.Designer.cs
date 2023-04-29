@@ -102,7 +102,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(38, 568);
+            label2.Location = new Point(29, 568);
             label2.Name = "label2";
             label2.Size = new Size(88, 37);
             label2.TabIndex = 20;
@@ -113,7 +113,7 @@
             StatusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             StatusComboBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             StatusComboBox.FormattingEnabled = true;
-            StatusComboBox.Items.AddRange(new object[] { "scheduled", "in progress","abandoned","read online" });
+            StatusComboBox.Items.AddRange(new object[] { "Ccheduled", "In progress", "Abandoned", "Read online" });
             StatusComboBox.Location = new Point(38, 520);
             StatusComboBox.Name = "StatusComboBox";
             StatusComboBox.Size = new Size(198, 45);
@@ -156,7 +156,7 @@
             NoveltyComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             NoveltyComboBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             NoveltyComboBox.FormattingEnabled = true;
-            NoveltyComboBox.Items.AddRange(new object[] { "on hand", "in the library", "loaned out" });
+            NoveltyComboBox.Items.AddRange(new object[] { "On hand", "In the library", "Loaned out" });
             NoveltyComboBox.Location = new Point(38, 432);
             NoveltyComboBox.Name = "NoveltyComboBox";
             NoveltyComboBox.Size = new Size(198, 45);
@@ -167,7 +167,7 @@
             SectorComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             SectorComboBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             SectorComboBox.FormattingEnabled = true;
-            SectorComboBox.Items.AddRange(new object[] { "Scientific","artistic", "non-fiction",  "children's",  "economy" });
+            SectorComboBox.Items.AddRange(new object[] { "Scientific", "Artistic", "Non-fiction", "Children's", "Economy" });
             SectorComboBox.Location = new Point(298, 432);
             SectorComboBox.Name = "SectorComboBox";
             SectorComboBox.Size = new Size(198, 45);
@@ -178,7 +178,7 @@
             OriginComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             OriginComboBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             OriginComboBox.FormattingEnabled = true;
-            OriginComboBox.Items.AddRange(new object[] { "bought", "donated", "borrowed from libraries" });
+            OriginComboBox.Items.AddRange(new object[] { "Bought", "Donated", "Borrowed" });
             OriginComboBox.Location = new Point(298, 346);
             OriginComboBox.Name = "OriginComboBox";
             OriginComboBox.Size = new Size(198, 45);
@@ -192,6 +192,7 @@
             YearTextBox.Size = new Size(198, 43);
             YearTextBox.TabIndex = 12;
             YearTextBox.TextAlign = HorizontalAlignment.Center;
+            YearTextBox.TextChanged += YearTextBox_TextChanged;
             // 
             // PublisherTextBox
             // 
@@ -201,6 +202,7 @@
             PublisherTextBox.Size = new Size(458, 43);
             PublisherTextBox.TabIndex = 11;
             PublisherTextBox.TextAlign = HorizontalAlignment.Center;
+            PublisherTextBox.TextChanged += PublisherTextBox_TextChanged;
             // 
             // AuthorTextBox
             // 
@@ -210,6 +212,7 @@
             AuthorTextBox.Size = new Size(458, 43);
             AuthorTextBox.TabIndex = 10;
             AuthorTextBox.TextAlign = HorizontalAlignment.Center;
+            AuthorTextBox.TextChanged += AuthorTextBox_TextChanged;
             // 
             // NameTextBox
             // 
@@ -219,6 +222,7 @@
             NameTextBox.Size = new Size(458, 43);
             NameTextBox.TabIndex = 9;
             NameTextBox.TextAlign = HorizontalAlignment.Center;
+            NameTextBox.TextChanged += NameTextBox_TextChanged;
             // 
             // GradeLabel
             // 
@@ -244,7 +248,7 @@
             // 
             OriginLabel.AutoSize = true;
             OriginLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            OriginLabel.Location = new Point(298, 306);
+            OriginLabel.Location = new Point(288, 306);
             OriginLabel.Name = "OriginLabel";
             OriginLabel.Size = new Size(91, 37);
             OriginLabel.TabIndex = 6;
@@ -254,7 +258,7 @@
             // 
             SectorLabel.AutoSize = true;
             SectorLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            SectorLabel.Location = new Point(298, 394);
+            SectorLabel.Location = new Point(288, 394);
             SectorLabel.Name = "SectorLabel";
             SectorLabel.Size = new Size(91, 37);
             SectorLabel.TabIndex = 5;
@@ -333,10 +337,10 @@
         public ComboBox SectorComboBox;
         public ComboBox OriginComboBox;
         public ComboBox StatusComboBox;
-        public TextBox  PublisherTextBox;
-        public TextBox  YearTextBox;
-        public TextBox  AuthorTextBox;
-        public TextBox  NameTextBox;
+        public TextBox PublisherTextBox;
+        public TextBox YearTextBox;
+        public TextBox AuthorTextBox;
+        public TextBox NameTextBox;
         public Button saveButton;
         public Button CloseButton;
         private Label YearLabel;

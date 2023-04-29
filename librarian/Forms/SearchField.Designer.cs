@@ -31,26 +31,26 @@
             searchTextBox = new TextBox();
             searchButton = new Button();
             bookArea = new Panel();
+            SearchComboBox = new ComboBox();
             SuspendLayout();
             // 
             // searchTextBox
             // 
-            searchTextBox.Anchor = AnchorStyles.Top;
             searchTextBox.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point);
-            searchTextBox.Location = new Point(62, 28);
+            searchTextBox.Location = new Point(12, 17);
             searchTextBox.Name = "searchTextBox";
-            searchTextBox.Size = new Size(765, 61);
+            searchTextBox.Size = new Size(653, 61);
             searchTextBox.TabIndex = 0;
             searchTextBox.TextChanged += searchTextBox_TextChanged;
             // 
             // searchButton
             // 
-            searchButton.Anchor = AnchorStyles.Top;
+            searchButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             searchButton.BackColor = Color.White;
             searchButton.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            searchButton.Location = new Point(863, 28);
+            searchButton.Location = new Point(947, 17);
             searchButton.Name = "searchButton";
-            searchButton.Size = new Size(155, 61);
+            searchButton.Size = new Size(121, 61);
             searchButton.TabIndex = 1;
             searchButton.Text = "Search";
             searchButton.UseVisualStyleBackColor = false;
@@ -58,11 +58,25 @@
             // 
             // bookArea
             // 
+            bookArea.AutoScroll = true;
             bookArea.BackColor = Color.Transparent;
-            bookArea.Location = new Point(1, 95);
+            bookArea.Location = new Point(1, 97);
             bookArea.Name = "bookArea";
-            bookArea.Size = new Size(1077, 703);
+            bookArea.Size = new Size(1077, 701);
             bookArea.TabIndex = 2;
+            // 
+            // SearchComboBox
+            // 
+            SearchComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            SearchComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            SearchComboBox.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point);
+            SearchComboBox.FormattingEnabled = true;
+            SearchComboBox.Items.AddRange(new object[] { "Name", "Author", "Publisher", "Genre", "Sector", "Novelty", "Year", "Grade", "Origin" });
+            SearchComboBox.Location = new Point(671, 17);
+            SearchComboBox.Name = "SearchComboBox";
+            SearchComboBox.Size = new Size(270, 62);
+            SearchComboBox.TabIndex = 3;
+            SearchComboBox.SelectedIndexChanged += SearchComboBox_SelectedIndexChanged;
             // 
             // SearchField
             // 
@@ -70,6 +84,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightCoral;
             ClientSize = new Size(1080, 800);
+            Controls.Add(SearchComboBox);
             Controls.Add(bookArea);
             Controls.Add(searchButton);
             Controls.Add(searchTextBox);
@@ -86,5 +101,6 @@
         private TextBox searchTextBox;
         private Button searchButton;
         private Panel bookArea;
+        private ComboBox SearchComboBox;
     }
 }

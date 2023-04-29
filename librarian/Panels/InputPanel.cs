@@ -14,7 +14,7 @@
         private void Panel_Init()
         {
             int x = (Parent!.Width - Width) / 2;
-            int y = (Parent!.Height - Height) / 2;
+            int y = ((Parent!.Height - Height) / 2) - 15;
             Location = new Point(x, y);
         }
         private void Events_Init(EventHandler SaveButton_Click)
@@ -37,7 +37,7 @@
             Form1.ControlSwitching(true, Parent!, c => !c.Enabled);
             Positioning.panelsPerRow = Positioning.CalculatePanelsPerRow(Parent!.Width);
             Form1.books.Add(new BookPanel(NameTextBox.Text, AuthorTextBox.Text, PublisherTextBox.Text,
-                         YearTextBox.Text, SectorComboBox.Text,  OriginComboBox.Text, NoveltyComboBox.Text,
+                         YearTextBox.Text, SectorComboBox.Text, OriginComboBox.Text, NoveltyComboBox.Text,
                          GenreComboBox.Text, GradeComboBox.Text, Parent, Parent));
             Parent!.Controls.Remove(this);
             Positioning.currentColumn++;
@@ -45,7 +45,7 @@
         }
         public void CloseButton_Click(object? sender, EventArgs e)
         {
-            if(Parent != null)
+            if (Parent != null)
             {
                 Form1.ControlSwitching(true, Parent, c => !c.Enabled);
                 Parent.Controls.Remove(this);
@@ -59,5 +59,24 @@
             saveButton.Enabled = allFilled;
         }
 
+        private void NameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            NameTextBox.Text = Validator.RegularText_Validator(NameTextBox.Text);
+        }
+
+        private void AuthorTextBox_TextChanged(object sender, EventArgs e)
+        {
+            AuthorTextBox.Text = Validator.RegularText_Validator(AuthorTextBox.Text);
+        }
+
+        private void PublisherTextBox_TextChanged(object sender, EventArgs e)
+        {
+            PublisherTextBox.Text = Validator.RegularText_Validator(PublisherTextBox.Text);
+        }
+
+        private void YearTextBox_TextChanged(object sender, EventArgs e)
+        {
+            YearTextBox.Text = Validator.Year_Validator(YearTextBox.Text);
+        }
     }
 }

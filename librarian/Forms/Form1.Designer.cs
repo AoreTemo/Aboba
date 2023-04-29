@@ -28,22 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            flowLayoutPanel1 = new FlowLayoutPanel();
+            bookPanelContainer = new Panel();
             SuspendLayout();
             // 
-            // flowLayoutPanel1
+            // bookPanelContainer
             // 
-            flowLayoutPanel1.Location = new Point(-3, -2);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(806, 455);
-            flowLayoutPanel1.TabIndex = 0;
+            bookPanelContainer.AutoScroll = true;
+            bookPanelContainer.Location = new Point(-2, -3);
+            bookPanelContainer.Name = "bookPanelContainer";
+            bookPanelContainer.Size = new Size(803, 457);
+            bookPanelContainer.TabIndex = 0;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(flowLayoutPanel1);
+            Controls.Add(bookPanelContainer);
             Name = "Form1";
             Text = "Form1";
             ResumeLayout(false);
@@ -51,6 +52,6 @@
 
         #endregion
 
-        private FlowLayoutPanel flowLayoutPanel1;
+        private Panel bookPanelContainer;
     }
 }

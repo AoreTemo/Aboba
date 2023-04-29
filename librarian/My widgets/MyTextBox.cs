@@ -1,4 +1,4 @@
-﻿using static librarian.MyConstantsForWidgets;
+﻿using static librarian.Positions.MyConstantsForWidgets;
 namespace librarian
 {
     internal class MyTextBox : TextBox
