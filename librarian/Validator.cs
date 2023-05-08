@@ -13,26 +13,17 @@
         }
         public static string Year_Validator(string year)
         {
-            if (year.Any(c => !char.IsDigit(c)))
+            int currentYear = DateTime.Now.Year;
+            int parsedYear;
+            if (!int.TryParse(year, out parsedYear) || parsedYear > currentYear || year.Length > 4)
             {
-                MessageBox.Show("For year use only digits");
-                int indexOfLetter = 0;
-                foreach(var c in year)
-                {
-                    if (char.IsDigit(c))
-                        indexOfLetter++;
-                    else
-                        break;
-                }
-                year = year.Substring(0, indexOfLetter);
+                MessageBox.Show("The text must have 4 digits. Year must be lower than current.");
+                year = currentYear.ToString();
             }
-            if(year.Length > 4)
+            else
             {
-                MessageBox.Show("The text must have 4 digits");
-                year = year.Substring(0, 4);
+                year = parsedYear.ToString();
             }
-
-
             return year;
         }
     }

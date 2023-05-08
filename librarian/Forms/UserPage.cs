@@ -12,8 +12,6 @@
         {
             InitializeComponent();
             LabelsInit(reader);
-            FormClosing += Search_FormClosing;
-
         }
 
         public void noBooks_Init()
@@ -35,21 +33,21 @@
         }
         private void LabelsInit(Reader reader)
         {
-            int xPos = Width / 2;
+            int xPos = (Width / 2) + 10;
 
             LabelText_Init(reader);
 
-            FavoriteBookLabel.Location = new Point(xPos, FavoriteBookTitle.Location.Y + 9);
-            FavoriteAuthorLabel.Location = new Point(xPos, FavoriteAuthorTitle.Location.Y + 9);
-            FavoriteGenreLabel.Location = new Point(xPos, FavoriteGenreTitle.Location.Y + 9);
-            AmountOfBooksLabel.Location = new Point(xPos, AmountOfBooksTitle.Location.Y + 9);
+            FavoriteBookLabel.Location = new Point(xPos, FavoriteBookTitle.Location.Y);
+            FavoriteAuthorLabel.Location = new Point(xPos, FavoriteAuthorTitle.Location.Y);
+            FavoriteGenreLabel.Location = new Point(xPos, FavoriteGenreTitle.Location.Y);
+            AmountOfBooksLabel.Location = new Point(xPos, AmountOfBooksTitle.Location.Y);
 
             FavoriteBookLabel.Anchor = FavoriteBookTitle.Anchor;
             FavoriteAuthorLabel.Anchor = FavoriteAuthorTitle.Anchor;
             FavoriteGenreLabel.Anchor = FavoriteGenreTitle.Anchor;
             AmountOfBooksLabel.Anchor = AmountOfBooksTitle.Anchor;
 
-            FavoriteBookLabel.Font = FavoriteAuthorLabel.Font = FavoriteGenreLabel.Font = AmountOfBooksLabel.Font = new Font("Segue UI", 36);
+            FavoriteBookLabel.Font = FavoriteAuthorLabel.Font = FavoriteGenreLabel.Font = AmountOfBooksLabel.Font = new Font("Segue UI", 18);
 
             FavoriteBookLabel.AutoSize = FavoriteAuthorLabel.AutoSize = FavoriteGenreLabel.AutoSize = AmountOfBooksLabel.AutoSize = true;
 
@@ -58,17 +56,16 @@
         public void LabelText_Init(Reader reader)
         {
             FavoriteBookLabel.Text = reader.FavoriteBook;
-            FavoriteAuthorLabel.Text = reader.FavoriteAuthor.Length > 16 ? reader.FavoriteAuthor.Substring(0, 13) + "..." : reader.FavoriteAuthor;
+            FavoriteAuthorLabel.Text = reader.FavoriteAuthor;
             FavoriteGenreLabel.Text = reader.FavoriteGenre;
             AmountOfBooksLabel.Text = Convert.ToString(reader.CountOfBooks);
         }
-        private void Search_FormClosing(object? sender, FormClosingEventArgs e)
+        private void closeButton_Click(object sender, EventArgs e)
         {
             if (Controls.Contains(noBooks))
             {
                 Controls.Remove(noBooks);
             }
-            e.Cancel = true;
             Hide();
         }
     }

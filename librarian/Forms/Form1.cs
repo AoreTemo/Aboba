@@ -6,10 +6,13 @@ namespace librarian
 {
     public partial class Form1 : Form
     {
+        private static bool _isLocatingBooks = false;
+
+        private int previousWidth;
+
         private MyButton? AddButton;
         private MyButton? SearchButton;
         private MyButton? UserInfoButton;
-
 
         public const int MINIMUM_WIDTH = 1080;
         public const int MINIMUM_HEIGHT = 815;
@@ -21,6 +24,7 @@ namespace librarian
         public UserPage? UserInfo;
 
         public Reader? reader;
+
 
         public static List<BookPanel> books = new List<BookPanel>();
 
@@ -43,11 +47,12 @@ namespace librarian
         {
             MinimumSize = new Size(MINIMUM_WIDTH, MINIMUM_HEIGHT);
             Size = new Size(MINIMUM_WIDTH, MINIMUM_HEIGHT);
-            bookPanelContainer.Size = new Size(MINIMUM_WIDTH, MINIMUM_HEIGHT);
+            bookPanelContainer.Size = new Size(Width, Height - 50);            
             Resize += (s, e) =>
             {
+                bookPanelContainer.Location = new Point(0, 0);
                 bookPanelContainer.Width = Width;
-                bookPanelContainer.Height = Height;
+                bookPanelContainer.Size = new Size(Width, Height - 50);
             };
             FormClosing += Form1_FormClosing!;
             Load += Form1_Load!;
@@ -63,7 +68,8 @@ namespace librarian
         private void InitializeAddButton()
         {
             AddButton = new MyButton(20, "+", BUTTON_WIDTH, BUTTON_HEIGHT, Right - BUTTON_WIDTH - 30, Bottom - BUTTON_HEIGHT - 60, AddButton_Click);
-            bookPanelContainer!.Controls.Add(AddButton);
+            Controls.Add(AddButton);
+            AddButton!.BringToFront();
         }
         private void InitializeSearchButton()
         {
@@ -71,7 +77,8 @@ namespace librarian
             {
                 SearchButton = new MyButton(16, "Search", BUTTON_WIDTH, BUTTON_HEIGHT, Right - BUTTON_WIDTH - 30, AddButton.Top - BUTTON_HEIGHT - 20, SearchButton_Click);
             }
-            bookPanelContainer!.Controls.Add(SearchButton);
+            Controls.Add(SearchButton);
+            SearchButton!.BringToFront();
         }
         private void InitializeUserInfoButton()
         {
@@ -79,7 +86,8 @@ namespace librarian
             {
                 UserInfoButton = new MyButton(16, "User", BUTTON_WIDTH, BUTTON_HEIGHT, Right - BUTTON_WIDTH - 30, SearchButton.Top - BUTTON_HEIGHT - 20, UserInfoButton_Click);
             }
-            bookPanelContainer!.Controls.Add(UserInfoButton);
+            Controls.Add(UserInfoButton);
+            UserInfoButton!.BringToFront();
         }
         private void AddButton_Click(object? sender, EventArgs e)
         {
@@ -95,7 +103,6 @@ namespace librarian
         }
         private void UserInfoButton_Click(object? sender, EventArgs e)
         {
-            Hide();
             reader!.UpdateInfo();
 
             UserInfo!.LabelText_Init(reader);
@@ -103,29 +110,40 @@ namespace librarian
             {
                 UserInfo.noBooks_Init();
             }
+            UserInfo.TopLevel = false;
+            Controls.Add(UserInfo!);
+            UserInfo.BringToFront();
+            UserInfo.Location = new Point((Width - UserInfo.Width) / 2, (Height - UserInfo.Height) / 2);
+            UserInfo.Anchor = AnchorStyles.None;
             UserInfo!.Show();
-
         }
         private void bookPanelContainer_Resize(object? sender, EventArgs e)
         {
+            if (bookPanelContainer.Width == previousWidth) return;
             Form1.LocateBook(bookPanelContainer!, Form1.books.OfType<Control>());
+            previousWidth = bookPanelContainer.Width;
         }
-        public static void LocateBook(Control control, IEnumerable<Control> books)
+        public static void LocateBook(Panel control, IEnumerable<Control> books)
         {
-            if (control != null)
-                Positioning.panelsPerRow = Positioning.CalculatePanelsPerRow(control.Width);
+            if (_isLocatingBooks) return;
+            _isLocatingBooks = true;
+
+            Positioning.panelsPerRow = Positioning.CalculatePanelsPerRow(control!.Width);
 
             Positioning.currentRow = 0;
             Positioning.currentColumn = 0;
 
-            foreach (var book in books.Where(book => book is BookPanel))
+            control.AutoScrollPosition = new Point(0, 0);
+
+            foreach (BookPanel book in books.Where(book => book is BookPanel))
             {
-                int x = Positioning.GetCoordinateForBook(Coordinates.X);
-                int y = Positioning.GetCoordinateForBook(Coordinates.Y);
+                int x = Positioning.GetCoordinateForBook(Coordinates.X) - control.AutoScrollPosition.X;
+                int y = Positioning.GetCoordinateForBook(Coordinates.Y) - control.AutoScrollPosition.Y;
                 book.Location = new Point(x, y);
                 Positioning.currentColumn++;
                 Positioning.CheckColumnAndRow();
             }
+            _isLocatingBooks = false;
         }
         public static void ControlSwitching(bool value, Control control, Func<Control, bool> condition)
         {
@@ -171,7 +189,7 @@ namespace librarian
                     }
                 }
 
-                for(int i = 0; i < booksArray.GetLength(0); i++)
+                for (int i = 0; i < booksArray.GetLength(0); i++)
                 {
                     books.Add(new BookPanel(
                         booksArray[i, (int)NAME],
@@ -186,7 +204,7 @@ namespace librarian
                         bookPanelContainer!,
                         bookPanelContainer!));
                 }
-                Form1.LocateBook(bookPanelContainer!, Form1.books.OfType<Control>());
+                Form1.LocateBook(bookPanelContainer!, Form1.books.OfType<BookPanel>());
             }
         }
     }

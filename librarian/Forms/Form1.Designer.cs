@@ -34,9 +34,9 @@
             // bookPanelContainer
             // 
             bookPanelContainer.AutoScroll = true;
-            bookPanelContainer.Location = new Point(-2, -3);
+            bookPanelContainer.Location = new Point(-3, -5);
             bookPanelContainer.Name = "bookPanelContainer";
-            bookPanelContainer.Size = new Size(803, 457);
+            bookPanelContainer.Size = new Size(811, 456);
             bookPanelContainer.TabIndex = 0;
             // 
             // Form1
@@ -46,7 +46,7 @@
             ClientSize = new Size(800, 450);
             Controls.Add(bookPanelContainer);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Library";
             ResumeLayout(false);
         }
 

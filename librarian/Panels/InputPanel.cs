@@ -39,9 +39,8 @@
             Form1.books.Add(new BookPanel(NameTextBox.Text, AuthorTextBox.Text, PublisherTextBox.Text,
                          YearTextBox.Text, SectorComboBox.Text, OriginComboBox.Text, NoveltyComboBox.Text,
                          GenreComboBox.Text, GradeComboBox.Text, Parent, Parent));
+            Form1.LocateBook((Panel)Parent!, Form1.books.OfType<Control>());
             Parent!.Controls.Remove(this);
-            Positioning.currentColumn++;
-            Positioning.CheckColumnAndRow();
         }
         public void CloseButton_Click(object? sender, EventArgs e)
         {

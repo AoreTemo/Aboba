@@ -38,8 +38,8 @@
                 }
             }
 
-            return $"Name:  {((result[0].Length > 9) ? result[0].Substring(0, 7) + "..." : result[0])}\n" +
-                $"Author: {((result[1].Length > 9) ? result[1].Substring(0, 7) + "..." : result[1])}";
+            return $"{((result[0].Length > 24) ? result[0].Substring(0, 21) + "..." : result[0])}\n" +
+                $"{((result[1].Length > 24) ? result[1].Substring(0, 21) + "..." : result[1])}";
         }
 
         public static string GetFavoriteAuthor()

@@ -8,6 +8,7 @@
         {
             InitializeComponent();
             bookArea.Width = Width;
+            bookArea.AutoScroll = true;
             Resize += (s, ev) =>
             {
                 bookArea.Width = Width;
@@ -43,6 +44,7 @@
                 var bookCopy = new BookPanel(book, bookArea, this);
                 bookCopy.panel1.Controls.Remove(bookCopy.editButton);
                 SuitableBooks.Add(bookCopy);
+                bookArea!.Controls.Add(bookCopy);
             }
 
             Form1.LocateBook(bookArea, SuitableBooks.OfType<Control>());

@@ -1,4 +1,5 @@
 ﻿using librarian.Panels;
+
 namespace librarian
 {
     public partial class BookPanel : UserControl
@@ -17,7 +18,6 @@ namespace librarian
             InitializeComponent();
             Book_Initializator(nameOfBook, author, publisher, year, sector, origin, novelty, genre, grade);
             parent.Controls.Add(this);
-            SetBooks_Properties();
         }
         public BookPanel(BookPanel other, Control control, Control editPanelControl)
         {
@@ -29,19 +29,12 @@ namespace librarian
             BookLabels_Init(other.book.NameOfBook, other.book.Author, other.book.Publisher, other.book.Year, other.book.Sector, other.book.Origin,
                 other.book.Novelty, other.book.GenreOfBook, other.book.Grade);
         }
-
         private void Book_Initializator(string nameOfBook, string author, string publisher, string year,
                          string sector, string origin, string novelty, string genre, string grade)
         {
             book.Properties_Init(nameOfBook, author, publisher, year, genre, sector, origin, novelty, grade);
             BookLabels_Init(book.NameOfBook, book.Author, book.Publisher, book.Year, book.Sector, book.Origin,
                 book.Novelty, book.GenreOfBook, book.Grade);
-        }
-        private void SetBooks_Properties()
-        {
-            int x = Positioning.PANEL_MARGIN_LEFT_TOP + Positioning.currentColumn * (Positioning.PANEL_WIDTH + Positioning.PANEL_MARGIN_LEFT_TOP);
-            int y = Positioning.PANEL_MARGIN_LEFT_TOP + Positioning.currentRow * (Positioning.PANEL_HEIGHT + Positioning.PANEL_MARGIN_LEFT_TOP);
-            Location = new Point(x, y);
         }
         private void BookLabels_Init(string nameOfBook, string author, string publisher, string year,
                             string sector, string origin, string novelty, string genre, string grade)
@@ -95,8 +88,8 @@ namespace librarian
             Form1.ControlSwitching(true, EditPanelControl, c => !c.Enabled);
             parent.Controls.Remove(this);
             Form1.books.Remove(this);
-            if (parent != null)
-                Form1.LocateBook(parent, Form1.books.OfType<Control>());
+            if (parent != null && parent is Panel parentPanel)
+                Form1.LocateBook(parentPanel, Form1.books.OfType<Control>());
         }
 
         private void moreButton_Click(object sender, EventArgs e)
