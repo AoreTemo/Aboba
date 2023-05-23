@@ -2,6 +2,7 @@
 {
     public class Reader
     {
+        private static BookPanel? favoriteBookByGrade;
         public string FavoriteBook { get; set; } = "";
         public string FavoriteAuthor { get; set; } = "";
         public string FavoriteGenre { get; set; } = "";
@@ -13,47 +14,47 @@
         }
         public void UpdateInfo()
         {
-            if (Form1.books.Count != 0)
+            if (Books.AllBooks.Count != 0)
             {
                 FavoriteBook = GetFavoriteBook();
                 FavoriteAuthor = GetFavoriteAuthor();
                 FavoriteGenre = GetFavoriteGenre();
-                CountOfBooks = Form1.books.Count;
+                CountOfBooks = Books.AllBooks.Count;
             }
         }
 
         public static string GetFavoriteBook()
         {
-            List<string> result = new List<string>();
+            List<string> result = new ();
             int maxGrade = 0;
 
-            foreach (var book in Form1.books)
+            foreach (var book in Books.AllBooks)
             {
                 if (int.Parse(book.book.Grade) > maxGrade)
                 {
                     result.Clear();
                     maxGrade = int.Parse(book.book.Grade);
+                    favoriteBookByGrade = book;
                     result.Add(book.book.NameOfBook);
                     result.Add(book.book.Author);
                 }
             }
 
-            return $"{((result[0].Length > 24) ? result[0].Substring(0, 21) + "..." : result[0])}\n" +
-                $"{((result[1].Length > 24) ? result[1].Substring(0, 21) + "..." : result[1])}";
+            return string.Concat($"{((result[0].Length > 24) ? result[0][..21] + "..." : result[0])}\n",
+                $"{((result[1].Length > 24) ? result[1][..21] + "..." : result[1])}");
         }
-
         public static string GetFavoriteAuthor()
         {
-            return GetMostCommonValue(Form1.books, book => book.book.Author);
+            return GetMostCommonValue(Books.AllBooks, book => book.book.Author);
         }
         public static string GetFavoriteGenre()
         {
-            return GetMostCommonValue(Form1.books, book => book.book.GenreOfBook);
+            return GetMostCommonValue(Books.AllBooks, book => book.book.GenreOfBook);
         }
         public static string GetMostCommonValue(List<BookPanel> books, Func<BookPanel, string> propertySelector)
         {
             string result = "";
-            Dictionary<string, int> values = new Dictionary<string, int>();
+            Dictionary<string, int> values = new();
 
             foreach (var book in books)
             {
@@ -66,6 +67,13 @@
                 {
                     values[value]++;
                 }
+            }
+
+            if (values.Values.All(val => val <= 1))
+            {
+                result = propertySelector(favoriteBookByGrade!);
+                return $"{((result.Length > 24) ? result[..21] + "..." : result)}\n"; ;
+
             }
 
             int maxCount = 0;

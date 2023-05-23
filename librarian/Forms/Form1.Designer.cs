@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             bookPanelContainer = new Panel();
             SuspendLayout();
             // 
@@ -45,6 +46,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(bookPanelContainer);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Library";
             ResumeLayout(false);
@@ -52,6 +54,6 @@
 
         #endregion
 
-        private Panel bookPanelContainer;
+        public Panel bookPanelContainer;
     }
 }

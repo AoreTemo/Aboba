@@ -14,19 +14,18 @@ namespace librarian
         private MyButton? SearchButton;
         private MyButton? UserInfoButton;
 
-        public const int MINIMUM_WIDTH = 1080;
-        public const int MINIMUM_HEIGHT = 815;
-
         public const int BUTTON_WIDTH = 135;
         public const int BUTTON_HEIGHT = 135;
+
+        public const int MINIMUM_WIDTH = ((Positioning.PANEL_WIDTH * 2) + Positioning.PANEL_MARGIN_LEFT_TOP * 3) + 60 + BUTTON_WIDTH + 10;
+        public const int MINIMUM_HEIGHT = 815;
 
         public SearchField? Search;
         public UserPage? UserInfo;
 
         public Reader? reader;
 
-
-        public static List<BookPanel> books = new List<BookPanel>();
+        public List<Control> AllControlsOnForm = new();
 
         public Form1()
         {
@@ -36,6 +35,7 @@ namespace librarian
             InitializeSearchButton();
             InitializeUserInfoButton();
         }
+
         private void VisibleChange(object? sender, EventArgs e)
         {
             if (!Search!.Visible && !UserInfo!.Visible)
@@ -45,25 +45,27 @@ namespace librarian
         }
         private void InitializeForm()
         {
-            MinimumSize = new Size(MINIMUM_WIDTH, MINIMUM_HEIGHT);
-            Size = new Size(MINIMUM_WIDTH, MINIMUM_HEIGHT);
-            bookPanelContainer.Size = new Size(Width, Height - 50);            
+            MinimumSize = new(MINIMUM_WIDTH, MINIMUM_HEIGHT);
+            Size = new(MINIMUM_WIDTH, MINIMUM_HEIGHT);
+            BackColor = MyColor.DarkGreen;
+            bookPanelContainer.Size = new Size(Width - 30 - BUTTON_WIDTH - 30, Height - 50);
+            bookPanelContainer.BackColor = MyColor.Brown;
+            reader = new();
+            Search = new();
+            UserInfo = new(reader);
             Resize += (s, e) =>
             {
                 bookPanelContainer.Location = new Point(0, 0);
-                bookPanelContainer.Width = Width;
-                bookPanelContainer.Size = new Size(Width, Height - 50);
+                bookPanelContainer.Size = new Size(Width - 30 - BUTTON_WIDTH - 30, Height - 50);
             };
             FormClosing += Form1_FormClosing!;
             Load += Form1_Load!;
-            reader = new Reader();
-            Search = new SearchField();
-            UserInfo = new UserPage(reader);
 
-            bookPanelContainer.Resize += bookPanelContainer_Resize;
+            bookPanelContainer.Resize += BookPanelContainer_Resize;
 
             Search.VisibleChanged += VisibleChange;
             UserInfo.VisibleChanged += VisibleChange;
+            AllControlsOnForm = FormManager.GetAllControls(this);
         }
         private void InitializeAddButton()
         {
@@ -91,10 +93,11 @@ namespace librarian
         }
         private void AddButton_Click(object? sender, EventArgs e)
         {
-            InputPanel panel = new InputPanel(bookPanelContainer!, null);
-            bookPanelContainer!.Controls.Add(panel);
+            InputPanel panel = new(bookPanelContainer, null);
+            Controls.Add(panel);
             panel.BringToFront();
-            Form1.ControlSwitching(false, bookPanelContainer!, c => c != panel && c.Parent != panel);
+            panel.Location = new Point((Width - panel.Width) / 2, ((Height - panel.Height) / 2) - 20);
+            FormManager.ControlSwitching(FormManager.GetAllControls(this), false, c => c != panel && c.Parent != panel.panel1 && c != panel.panel1);
         }
         private void SearchButton_Click(object? sender, EventArgs e)
         {
@@ -106,21 +109,22 @@ namespace librarian
             reader!.UpdateInfo();
 
             UserInfo!.LabelText_Init(reader);
-            if (books.Count == 0)
+            if (Books.AllBooks.Count == 0)
             {
-                UserInfo.noBooks_Init();
+                UserInfo.NoBooksInit();
             }
             UserInfo.TopLevel = false;
             Controls.Add(UserInfo!);
             UserInfo.BringToFront();
             UserInfo.Location = new Point((Width - UserInfo.Width) / 2, (Height - UserInfo.Height) / 2);
             UserInfo.Anchor = AnchorStyles.None;
+            FormManager.ControlSwitching(FormManager.GetAllControls(this), false, c => c is not Form && c.Parent != UserInfo.infoPanel && c != UserInfo.infoPanel);
             UserInfo!.Show();
         }
-        private void bookPanelContainer_Resize(object? sender, EventArgs e)
+        private void BookPanelContainer_Resize(object? sender, EventArgs e)
         {
             if (bookPanelContainer.Width == previousWidth) return;
-            Form1.LocateBook(bookPanelContainer!, Form1.books.OfType<Control>());
+            Form1.LocateBook(bookPanelContainer!, Books.AllBooks.OfType<Control>());
             previousWidth = bookPanelContainer.Width;
         }
         public static void LocateBook(Panel control, IEnumerable<Control> books)
@@ -135,7 +139,7 @@ namespace librarian
 
             control.AutoScrollPosition = new Point(0, 0);
 
-            foreach (BookPanel book in books.Where(book => book is BookPanel))
+            foreach (BookPanel book in books.Where(book => book is BookPanel).Cast<BookPanel>())
             {
                 int x = Positioning.GetCoordinateForBook(Coordinates.X) - control.AutoScrollPosition.X;
                 int y = Positioning.GetCoordinateForBook(Coordinates.Y) - control.AutoScrollPosition.Y;
@@ -145,27 +149,17 @@ namespace librarian
             }
             _isLocatingBooks = false;
         }
-        public static void ControlSwitching(bool value, Control control, Func<Control, bool> condition)
-        {
-            if (control != null)
-            {
-                foreach (Control element in control.Controls.OfType<Control>().Where(condition))
-                    element.Enabled = value;
-            }
-        }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), "booksStoring.txt"); ;
 
-            using (StreamWriter writer = new StreamWriter(filePath))
+            using StreamWriter writer = new(filePath);
+            foreach (var book in Books.AllBooks)
             {
-                foreach (var book in books)
-                {
-                    string line = $"{book.book.NameOfBook}|{book.book.Author}|{book.book.Publisher}|" +
-                        $"{book.book.GenreOfBook}|{book.book.Year}|{book.book.Origin}|{book.book.Novelty}|" +
-                        $"{book.book.Sector}|{book.book.Grade}";
-                    writer.WriteLine(line);
-                }
+                string line = $"{book.book.NameOfBook}|{book.book.Author}|{book.book.Publisher}|" +
+                    $"{book.book.Year}|{book.book.Sector}|{book.book.Origin}|{book.book.Novelty}|" +
+                    $"{book.book.GenreOfBook}|{book.book.Grade}|{book.book.Status}";
+                writer.WriteLine(line);
             }
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -176,7 +170,7 @@ namespace librarian
             {
                 string[] lines = File.ReadAllLines(filePath);
 
-                string[,] booksArray = new string[lines.Length, 9];
+                string[,] booksArray = new string[lines.Length, 10];
 
 
                 for (int i = 0; i < lines.Length; i++)
@@ -191,7 +185,7 @@ namespace librarian
 
                 for (int i = 0; i < booksArray.GetLength(0); i++)
                 {
-                    books.Add(new BookPanel(
+                    Books.AllBooks.Add(new BookPanel(
                         booksArray[i, (int)NAME],
                         booksArray[i, (int)AUTHOR],
                         booksArray[i, (int)PUBLISHER],
@@ -201,10 +195,10 @@ namespace librarian
                         booksArray[i, (int)NOVELTY],
                         booksArray[i, (int)GENRE],
                         booksArray[i, (int)GRADE],
-                        bookPanelContainer!,
+                        booksArray[i, (int)STATUS],
                         bookPanelContainer!));
                 }
-                Form1.LocateBook(bookPanelContainer!, Form1.books.OfType<BookPanel>());
+                Form1.LocateBook(bookPanelContainer!, Books.AllBooks.OfType<BookPanel>());
             }
         }
     }

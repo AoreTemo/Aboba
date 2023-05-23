@@ -1,34 +1,6 @@
-aboba|Protsenko Oleksandr|Nure huynya|Detective|2004|Donated|On hand|Scientific|2
-аппкуп|атр атр атр|Nure huynya|Detective|2004|Donated|On hand|Scientific|1
-aboba|Protsenko Oleksandr|Nure huynya|Detective|2004|Donated|On hand|Scientific|2
-хуй|Шпак Денис|ыауа|Detective|2004|Donated|On hand|Scientific|5
-аппкуп|атр атр атр|Nure huynya|Detective|2004|Donated|On hand|Scientific|1
-aboba|Protsenko Oleksandr|Nure huynya|Detective|2004|Donated|On hand|Scientific|2
-хуй|Шпак Денис|ыауа|Detective|2004|Donated|On hand|Scientific|5
-аппкуп|атр атр атр|Nure huynya|Detective|2004|Donated|On hand|Scientific|1
-aboba|Protsenko Oleksandr|Nure huynya|Detective|2004|Donated|On hand|Scientific|2
-хуй|Шпак Денис|ыауа|Detective|2004|Donated|On hand|Scientific|5
-аппкуп|атр атр атр|Nure huynya|Detective|2004|Donated|On hand|Scientific|1
-aboba|Protsenko Oleksandr|Nure huynya|Detective|2004|Donated|On hand|Scientific|2
-хуй|Шпак Денис|ыауа|Detective|2004|Donated|On hand|Scientific|5
-аппкуп|атр атр атр|Nure huynya|Detective|2004|Donated|On hand|Scientific|1
-aboba|Protsenko Oleksandr|Nure huynya|Detective|2004|Donated|On hand|Scientific|2
-хуй|Шпак Денис|ыауа|Detective|2004|Donated|On hand|Scientific|5
-аппкуп|атр атр атр|Nure huynya|Detective|2004|Donated|On hand|Scientific|1
-aboba|Protsenko Oleksandr|Nure huynya|Detective|2004|Donated|On hand|Scientific|2
-хуй|Шпак Денис|ыауа|Detective|2004|Donated|On hand|Scientific|5
-аппкуп|атр атр атр|Nure huynya|Detective|2004|Donated|On hand|Scientific|1
-aboba|Protsenko Oleksandr|Nure huynya|Detective|2004|Donated|On hand|Scientific|2
-аппкуп|атр атр атр|Nure huynya|Detective|2004|Donated|On hand|Scientific|1
-aboba|Protsenko Oleksandr|Nure huynya|Detective|2004|Donated|On hand|Scientific|2
-хуй|Шпак Денис|ыауа|Detective|2004|Donated|On hand|Scientific|5
-аппкуп|атр атр атр|Nure huynya|Detective|2004|Donated|On hand|Scientific|1
-11111111|1111111111|1111111111|Detective|1111|Bought|In the library|Artistic|2
-хуй|Шпак Денис|ыауа|Detective|2004|Donated|On hand|Scientific|5
-аппкуп|атр атр атр|Nure huynya|Detective|2004|Donated|On hand|Scientific|1
-aboba|Protsenko Oleksandr|Nure huynya|Detective|2004|Donated|On hand|Scientific|2
-хуй|Шпак Денис|ыауа|Detective|2004|Donated|On hand|Scientific|5
-аппкуп|атр атр атр|Nure huynya|Detective|2004|Donated|On hand|Scientific|1
-aboba|Protsenko Oleksandr|Nure huynya|Detective|2004|Donated|On hand|Scientific|2
-хуй|Шпак Денис|ыауа|Detective|2004|Donated|On hand|Scientific|5
-аппкуп|атр атр атр|Nure huynya|Detective|2004|Donated|On hand|Scientific|1
+123231|12321wewq|3|2004|Scientific|Bought|On hand|Fiction|1|In progress
+1|фыв|сми|4|Scientific|Bought|On hand|Fiction, Mystery, Fantasy|1|Scheduled
+123231|12321wewq|3|4|Scientific|Donated|On hand|Fantasy|1|In progress
+1|2|йу|1999|Scientific|Bought|On hand||1|Scheduled
+2004|12321wewq|3|2003|Scientific|Bought|On hand|Fiction|3|In progress
+1|Шпак, Проценко, Гавриленко|2|2023|Artistic|Bought|In the library|фывыф|2|In progress

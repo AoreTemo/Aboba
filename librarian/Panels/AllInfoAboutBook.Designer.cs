@@ -58,7 +58,8 @@
             // panel1
             // 
             panel1.Anchor = AnchorStyles.None;
-            panel1.BackColor = Color.PaleTurquoise;
+            panel1.BackColor = Color.FromArgb(103, 86, 125);
+            panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(GenreInfo);
             panel1.Controls.Add(StatusInfo);
@@ -97,11 +98,10 @@
             // 
             // GenreInfo
             // 
-            GenreInfo.AutoSize = true;
             GenreInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            GenreInfo.Location = new Point(29, 669);
+            GenreInfo.Location = new Point(29, 635);
             GenreInfo.Name = "GenreInfo";
-            GenreInfo.Size = new Size(88, 37);
+            GenreInfo.Size = new Size(235, 71);
             GenreInfo.TabIndex = 41;
             GenreInfo.Text = "Genre";
             // 
@@ -119,7 +119,7 @@
             // 
             GradeInfo.AutoSize = true;
             GradeInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            GradeInfo.Location = new Point(300, 669);
+            GradeInfo.Location = new Point(300, 635);
             GradeInfo.Name = "GradeInfo";
             GradeInfo.Size = new Size(89, 37);
             GradeInfo.TabIndex = 39;
@@ -199,7 +199,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(29, 617);
+            label2.Location = new Point(29, 598);
             label2.Name = "label2";
             label2.Size = new Size(88, 37);
             label2.TabIndex = 31;
@@ -219,7 +219,7 @@
             // 
             GradeLabel.AutoSize = true;
             GradeLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            GradeLabel.Location = new Point(300, 617);
+            GradeLabel.Location = new Point(300, 598);
             GradeLabel.Name = "GradeLabel";
             GradeLabel.Size = new Size(89, 37);
             GradeLabel.TabIndex = 29;
@@ -297,7 +297,8 @@
             // 
             // CloseButton
             // 
-            CloseButton.BackColor = Color.PaleGreen;
+            CloseButton.BackColor = Color.FromArgb(133, 120, 150);
+            CloseButton.FlatStyle = FlatStyle.Flat;
             CloseButton.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             CloseButton.Location = new Point(457, 3);
             CloseButton.Name = "CloseButton";

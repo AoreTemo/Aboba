@@ -4,12 +4,13 @@
     {
         NAME,
         AUTHOR,
-        PUBLISHER,
-        GENRE,
-        YEAR,
-        ORIGIN,
+        PUBLISHER,   
+        YEAR,  
+        SECTOR,  
+        ORIGIN,     
         NOVELTY,
-        SECTOR,
-        GRADE
+        GENRE,
+        GRADE,
+        STATUS
     }
 }

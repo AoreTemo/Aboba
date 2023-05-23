@@ -1,0 +1,9 @@
+Date and Time of Save: 22.05.2023 1:45:08
+
+NameTextBox: 1
+GradeComboBox: 1
+
+Name of book | Author | Publisher | Year | Sector | Origin | Novelty | Genre of book | Grade | Status
+1 | 2 | 3 | 4 | Scientific | Bought | On hand | Fiction, Novel | 1 | Scheduled
+1 | фыв | сми | 4 | Scientific | Bought | On hand | Fiction, Novel | 1 | Scheduled
+1 | 2 | йу | 4 | Scientific | Bought | On hand | Fiction, Novel | 1 | Scheduled

@@ -101,7 +101,7 @@
             // infoPanel
             // 
             infoPanel.Anchor = AnchorStyles.None;
-            infoPanel.BackColor = Color.FromArgb(128, 128, 255);
+            infoPanel.BackColor = MyColor.Genoa;
             infoPanel.BorderStyle = BorderStyle.FixedSingle;
             infoPanel.Controls.Add(closeButton);
             infoPanel.Controls.Add(pictureBox4);
@@ -119,7 +119,7 @@
             // 
             // closeButton
             // 
-            closeButton.BackColor = Color.FromArgb(255, 128, 128);
+            closeButton.BackColor = MyColor.Red;
             closeButton.FlatStyle = FlatStyle.Flat;
             closeButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             closeButton.Location = new Point(821, 3);
@@ -128,7 +128,7 @@
             closeButton.TabIndex = 6;
             closeButton.Text = "X";
             closeButton.UseVisualStyleBackColor = false;
-            closeButton.Click += closeButton_Click;
+            closeButton.Click += CloseButton_Click;
             // 
             // pictureBox4
             // 
@@ -183,7 +183,7 @@
         private Label FavoriteAuthorTitle;
         private Label FavoriteGenreTitle;
         private Label AmountOfBooksTitle;
-        private Panel infoPanel;
+        public Panel infoPanel;
         private PictureBox pictureBox1;
         private PictureBox pictureBox4;
         private PictureBox pictureBox3;

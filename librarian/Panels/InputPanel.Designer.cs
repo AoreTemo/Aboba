@@ -29,7 +29,9 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            GenreComboBox = new ComboBox();
+            AddGenreButton = new Button();
+            AddYourGenreTextBox = new TextBox();
+            GenreComboBox = new CheckedListBox();
             label2 = new Label();
             StatusComboBox = new ComboBox();
             label1 = new Label();
@@ -57,7 +59,10 @@
             // panel1
             // 
             panel1.Anchor = AnchorStyles.None;
-            panel1.BackColor = Color.Coral;
+            panel1.BackColor = Color.FromArgb(128, 255, 128);
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(AddGenreButton);
+            panel1.Controls.Add(AddYourGenreTextBox);
             panel1.Controls.Add(GenreComboBox);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(StatusComboBox);
@@ -87,22 +92,42 @@
             panel1.Size = new Size(540, 740);
             panel1.TabIndex = 0;
             // 
+            // AddGenreButton
+            // 
+            AddGenreButton.BackColor = Color.FromArgb(128, 64, 64);
+            AddGenreButton.FlatStyle = FlatStyle.Flat;
+            AddGenreButton.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            AddGenreButton.Location = new Point(320, 663);
+            AddGenreButton.Name = "AddGenreButton";
+            AddGenreButton.Size = new Size(154, 52);
+            AddGenreButton.TabIndex = 24;
+            AddGenreButton.Text = "Add genre";
+            AddGenreButton.UseVisualStyleBackColor = false;
+            AddGenreButton.Click += AddGenreButton_Click;
+            // 
+            // AddYourGenreTextBox
+            // 
+            AddYourGenreTextBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            AddYourGenreTextBox.Location = new Point(298, 598);
+            AddYourGenreTextBox.Name = "AddYourGenreTextBox";
+            AddYourGenreTextBox.Size = new Size(198, 43);
+            AddYourGenreTextBox.TabIndex = 23;
+            AddYourGenreTextBox.TextChanged += AddYourGenreTextBox_TextChanged;
+            // 
             // GenreComboBox
             // 
-            GenreComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            GenreComboBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             GenreComboBox.FormattingEnabled = true;
-            GenreComboBox.Items.AddRange(new object[] { "Fiction", "Detective", "Novel", "Biography", "Poetry" });
-            GenreComboBox.Location = new Point(38, 608);
+            GenreComboBox.Items.AddRange(new object[] { "Fiction", "Novel", "Narrative", "Science fiction", "Mystery", "Fantasy", "Thriller", "Children's literature" });
+            GenreComboBox.Location = new Point(38, 598);
             GenreComboBox.Name = "GenreComboBox";
-            GenreComboBox.Size = new Size(198, 45);
-            GenreComboBox.TabIndex = 21;
+            GenreComboBox.Size = new Size(198, 136);
+            GenreComboBox.TabIndex = 22;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(29, 568);
+            label2.Location = new Point(29, 558);
             label2.Name = "label2";
             label2.Size = new Size(88, 37);
             label2.TabIndex = 20;
@@ -113,8 +138,8 @@
             StatusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             StatusComboBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             StatusComboBox.FormattingEnabled = true;
-            StatusComboBox.Items.AddRange(new object[] { "Ccheduled", "In progress", "Abandoned", "Read online" });
-            StatusComboBox.Location = new Point(38, 520);
+            StatusComboBox.Items.AddRange(new object[] { "Scheduled", "In progress", "Abandoned", "Read online" });
+            StatusComboBox.Location = new Point(38, 510);
             StatusComboBox.Name = "StatusComboBox";
             StatusComboBox.Size = new Size(198, 45);
             StatusComboBox.TabIndex = 19;
@@ -123,7 +148,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(29, 480);
+            label1.Location = new Point(29, 470);
             label1.Name = "label1";
             label1.Size = new Size(88, 37);
             label1.TabIndex = 18;
@@ -131,11 +156,12 @@
             // 
             // saveButton
             // 
-            saveButton.BackColor = Color.PaleGreen;
-            saveButton.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point);
-            saveButton.Location = new Point(191, 664);
+            saveButton.BackColor = Color.FromArgb(134, 147, 117);
+            saveButton.FlatStyle = FlatStyle.Flat;
+            saveButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            saveButton.Location = new Point(3, 2);
             saveButton.Name = "saveButton";
-            saveButton.Size = new Size(160, 73);
+            saveButton.Size = new Size(82, 40);
             saveButton.TabIndex = 17;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = false;
@@ -146,7 +172,7 @@
             GradeComboBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             GradeComboBox.FormattingEnabled = true;
             GradeComboBox.Items.AddRange(new object[] { "1", "2", "3", "4", "5" });
-            GradeComboBox.Location = new Point(298, 520);
+            GradeComboBox.Location = new Point(298, 510);
             GradeComboBox.Name = "GradeComboBox";
             GradeComboBox.Size = new Size(198, 45);
             GradeComboBox.TabIndex = 16;
@@ -157,7 +183,7 @@
             NoveltyComboBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             NoveltyComboBox.FormattingEnabled = true;
             NoveltyComboBox.Items.AddRange(new object[] { "On hand", "In the library", "Loaned out" });
-            NoveltyComboBox.Location = new Point(38, 432);
+            NoveltyComboBox.Location = new Point(38, 422);
             NoveltyComboBox.Name = "NoveltyComboBox";
             NoveltyComboBox.Size = new Size(198, 45);
             NoveltyComboBox.TabIndex = 15;
@@ -168,7 +194,7 @@
             SectorComboBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             SectorComboBox.FormattingEnabled = true;
             SectorComboBox.Items.AddRange(new object[] { "Scientific", "Artistic", "Non-fiction", "Children's", "Economy" });
-            SectorComboBox.Location = new Point(298, 432);
+            SectorComboBox.Location = new Point(298, 422);
             SectorComboBox.Name = "SectorComboBox";
             SectorComboBox.Size = new Size(198, 45);
             SectorComboBox.TabIndex = 14;
@@ -179,7 +205,7 @@
             OriginComboBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             OriginComboBox.FormattingEnabled = true;
             OriginComboBox.Items.AddRange(new object[] { "Bought", "Donated", "Borrowed" });
-            OriginComboBox.Location = new Point(298, 346);
+            OriginComboBox.Location = new Point(298, 334);
             OriginComboBox.Name = "OriginComboBox";
             OriginComboBox.Size = new Size(198, 45);
             OriginComboBox.TabIndex = 13;
@@ -187,7 +213,7 @@
             // YearTextBox
             // 
             YearTextBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            YearTextBox.Location = new Point(38, 346);
+            YearTextBox.Location = new Point(38, 336);
             YearTextBox.Name = "YearTextBox";
             YearTextBox.Size = new Size(198, 43);
             YearTextBox.TabIndex = 12;
@@ -197,7 +223,7 @@
             // PublisherTextBox
             // 
             PublisherTextBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            PublisherTextBox.Location = new Point(38, 260);
+            PublisherTextBox.Location = new Point(38, 250);
             PublisherTextBox.Name = "PublisherTextBox";
             PublisherTextBox.Size = new Size(458, 43);
             PublisherTextBox.TabIndex = 11;
@@ -207,7 +233,7 @@
             // AuthorTextBox
             // 
             AuthorTextBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            AuthorTextBox.Location = new Point(38, 174);
+            AuthorTextBox.Location = new Point(38, 164);
             AuthorTextBox.Name = "AuthorTextBox";
             AuthorTextBox.Size = new Size(458, 43);
             AuthorTextBox.TabIndex = 10;
@@ -217,7 +243,7 @@
             // NameTextBox
             // 
             NameTextBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            NameTextBox.Location = new Point(38, 88);
+            NameTextBox.Location = new Point(38, 78);
             NameTextBox.Name = "NameTextBox";
             NameTextBox.Size = new Size(458, 43);
             NameTextBox.TabIndex = 9;
@@ -228,7 +254,7 @@
             // 
             GradeLabel.AutoSize = true;
             GradeLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            GradeLabel.Location = new Point(288, 480);
+            GradeLabel.Location = new Point(288, 470);
             GradeLabel.Name = "GradeLabel";
             GradeLabel.Size = new Size(89, 37);
             GradeLabel.TabIndex = 8;
@@ -238,7 +264,7 @@
             // 
             NoveltyLabel.AutoSize = true;
             NoveltyLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            NoveltyLabel.Location = new Point(29, 392);
+            NoveltyLabel.Location = new Point(29, 382);
             NoveltyLabel.Name = "NoveltyLabel";
             NoveltyLabel.Size = new Size(109, 37);
             NoveltyLabel.TabIndex = 7;
@@ -248,7 +274,7 @@
             // 
             OriginLabel.AutoSize = true;
             OriginLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            OriginLabel.Location = new Point(288, 306);
+            OriginLabel.Location = new Point(288, 296);
             OriginLabel.Name = "OriginLabel";
             OriginLabel.Size = new Size(91, 37);
             OriginLabel.TabIndex = 6;
@@ -258,7 +284,7 @@
             // 
             SectorLabel.AutoSize = true;
             SectorLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            SectorLabel.Location = new Point(288, 394);
+            SectorLabel.Location = new Point(288, 382);
             SectorLabel.Name = "SectorLabel";
             SectorLabel.Size = new Size(91, 37);
             SectorLabel.TabIndex = 5;
@@ -268,7 +294,7 @@
             // 
             YearLabel.AutoSize = true;
             YearLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            YearLabel.Location = new Point(29, 306);
+            YearLabel.Location = new Point(29, 296);
             YearLabel.Name = "YearLabel";
             YearLabel.Size = new Size(198, 37);
             YearLabel.TabIndex = 4;
@@ -278,7 +304,7 @@
             // 
             PublisherLabel.AutoSize = true;
             PublisherLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            PublisherLabel.Location = new Point(29, 220);
+            PublisherLabel.Location = new Point(29, 210);
             PublisherLabel.Name = "PublisherLabel";
             PublisherLabel.Size = new Size(126, 37);
             PublisherLabel.TabIndex = 3;
@@ -288,7 +314,7 @@
             // 
             AuthorLabel.AutoSize = true;
             AuthorLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            AuthorLabel.Location = new Point(29, 134);
+            AuthorLabel.Location = new Point(29, 124);
             AuthorLabel.Name = "AuthorLabel";
             AuthorLabel.Size = new Size(98, 37);
             AuthorLabel.TabIndex = 2;
@@ -298,7 +324,7 @@
             // 
             NameLabel.AutoSize = true;
             NameLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            NameLabel.Location = new Point(29, 48);
+            NameLabel.Location = new Point(29, 38);
             NameLabel.Name = "NameLabel";
             NameLabel.Size = new Size(88, 37);
             NameLabel.TabIndex = 1;
@@ -306,7 +332,8 @@
             // 
             // CloseButton
             // 
-            CloseButton.BackColor = Color.PaleGreen;
+            CloseButton.BackColor = Color.FromArgb(134, 147, 117);
+            CloseButton.FlatStyle = FlatStyle.Flat;
             CloseButton.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             CloseButton.Location = new Point(457, 3);
             CloseButton.Name = "CloseButton";
@@ -330,8 +357,6 @@
         }
 
         #endregion
-
-        public ComboBox GenreComboBox;
         public ComboBox GradeComboBox;
         public ComboBox NoveltyComboBox;
         public ComboBox SectorComboBox;
@@ -354,5 +379,8 @@
         private Label label1;
         private Label label2;
         public Panel panel1;
+        private Button AddGenreButton;
+        private TextBox AddYourGenreTextBox;
+        public CheckedListBox GenreComboBox;
     }
 }

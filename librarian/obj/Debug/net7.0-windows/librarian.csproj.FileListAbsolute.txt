@@ -16,8 +16,6 @@ D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.pdb
 D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.genruntimeconfig.cache
 D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\ref\librarian.dll
 D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.SearchField.resources
-D:\Coursach\librarian\librarian\bin\Debug\net7.0-windows\MySqlConnector.dll
-D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.csproj.CopyComplete
 D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.InputPanel.resources
 D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.BookPanel.resources
 D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.Forms.UserPage.resources

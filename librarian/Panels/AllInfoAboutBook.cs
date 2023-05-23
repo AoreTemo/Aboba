@@ -5,11 +5,12 @@
         public AllInfoAboutBook()
         {
             InitializeComponent();
+            Anchor = AnchorStyles.None;
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            Form1.ControlSwitching(true, Parent!, c => !c.Enabled);
+            FormManager.ControlSwitching(FormManager.GetAllControls(Parent!), true, c => !c.Enabled);
             Parent!.Controls.Remove(this);
         }
     }
