@@ -1,205 +1,252 @@
 using librarian.Forms;
-using librarian.Positions;
-using static librarian.PropsEnum;
+using librarian.Panels;
 
-namespace librarian
+namespace librarian;
+
+public partial class Form1 : Form
 {
-    public partial class Form1 : Form
+    public const int BUTTON_WIDTH = 135;
+    public const int BUTTON_HEIGHT = 135;
+    public const int BUTTON_PADDING = 40;
+
+    public const int MINIMUM_WIDTH = 3 * Positioning.PANEL_WIDTH  + 4 * 
+        Positioning.PANEL_MARGIN_LEFT_TOP + 2 * BUTTON_PADDING + BUTTON_WIDTH;
+    public const int MINIMUM_HEIGHT = 815;
+
+    public List<Control> AllControlsOnForm = new();
+
+    public SearchField? Search;
+    public UserPage? UserInfo;
+
+    public Reader? reader;
+
+
+    private int previousWidth;
+
+    private MyButton DeleteGenresButton;
+    private MyButton UserInfoButton;
+    private MyButton SearchButton;
+    private MyButton AddButton;
+
+    private readonly DeleteGenresPanel DeleteGenresPanel =  new();
+    private bool isDeleteGenresPanelOpened = false;
+
+    public Form1()
     {
-        private static bool _isLocatingBooks = false;
+        InitializeComponent();
+        InitializeForm();
+    }
 
-        private int previousWidth;
+    private void InitializeButtons()
+    {
+        InitializeDeleteGenresButton();
+        InitializeAddButton();
+        InitializeSearchButton();
+        InitializeUserInfoButton();
+    }
 
-        private MyButton? AddButton;
-        private MyButton? SearchButton;
-        private MyButton? UserInfoButton;
+    private void VisibleChange(object? sender, EventArgs e)
+    {
+        if (Search!.Visible || UserInfo!.Visible)
+            return;
 
-        public const int BUTTON_WIDTH = 135;
-        public const int BUTTON_HEIGHT = 135;
+        Show();
+    }
 
-        public const int MINIMUM_WIDTH = ((Positioning.PANEL_WIDTH * 2) + Positioning.PANEL_MARGIN_LEFT_TOP * 3) + 60 + BUTTON_WIDTH + 10;
-        public const int MINIMUM_HEIGHT = 815;
-
-        public SearchField? Search;
-        public UserPage? UserInfo;
-
-        public Reader? reader;
-
-        public List<Control> AllControlsOnForm = new();
-
-        public Form1()
+    private void InitializeForm()
+    {
+        MinimumSize = new(MINIMUM_WIDTH, MINIMUM_HEIGHT);
+        Size = new(MINIMUM_WIDTH, MINIMUM_HEIGHT);
+        BackColor = MyColor.DarkGreen;
+        BookPanelContainer.Size = new(Width - 2 * BUTTON_PADDING - BUTTON_WIDTH, Height);
+        BookPanelContainer.BackColor = MyColor.Brown;
+        BookPanelContainer.AutoScrollMargin = new Size(BookPanelContainer.Width, BookPanelContainer.Height);
+        reader = new Reader();
+        Search = new SearchField();
+        UserInfo = new UserPage(reader, this);
+        
+        Resize += (s, e) =>
         {
-            InitializeComponent();
-            InitializeForm();
-            InitializeAddButton();
-            InitializeSearchButton();
-            InitializeUserInfoButton();
+            BookPanelContainer.Location = new(0, 0);
+            BookPanelContainer.Size = new(Width - 2 * BUTTON_PADDING - BUTTON_WIDTH, Height);
+        };
+
+        FormClosing += Form1_FormClosing!;
+        Load += Form1_Load!;
+
+        BookPanelContainer.Resize += BookPanelContainer_Resize;
+
+        Search.VisibleChanged += VisibleChange;
+        UserInfo.VisibleChanged += VisibleChange;
+        AllControlsOnForm = FormManager.GetAllControls(this);
+
+        InitializeButtons();
+
+        int x = DeleteGenresButton.Left - DeleteGenresPanel.Width;
+        int y = DeleteGenresButton.Top;
+        DeleteGenresPanel.Location = new Point(x, y);
+        DeleteGenresPanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+        DeleteGenresPanel.Hide();
+
+        Controls.Add(DeleteGenresPanel);
+    }
+
+    private void InitializeAddButton()
+    {
+        int x = Width - BUTTON_WIDTH - BUTTON_PADDING;
+        int y = Bottom - BUTTON_HEIGHT - 60;
+
+        AddButton = InitializeButton("Add", AddButton_Click, x, y);
+    }
+
+    private void InitializeSearchButton()
+    {
+        if (AddButton == null) return;
+
+        int x = Width - BUTTON_WIDTH - BUTTON_PADDING;
+        int y = AddButton.Top - BUTTON_HEIGHT - 20;
+
+        SearchButton = InitializeButton("Search", SearchButton_Click, x, y);
+    }
+
+    private void InitializeUserInfoButton()
+    {
+        if (SearchButton == null) return;
+
+        int x = Width - BUTTON_WIDTH - BUTTON_PADDING;
+        int y = SearchButton.Top - BUTTON_HEIGHT - 20;
+
+        UserInfoButton = InitializeButton("User", UserInfoButton_Click, x, y);
+    }
+
+    private void InitializeDeleteGenresButton()
+    {
+        int x = Width - BUTTON_WIDTH - BUTTON_PADDING;
+        int y = 20;
+
+        DeleteGenresButton = InitializeButton("Delete genre", DeleteGenresButton_Click, x, y, anchorControl: this);
+    }
+
+    private MyButton InitializeButton(string text, EventHandler clickHandler, int x, int y, Control? anchorControl = null)
+    {
+        int buttonWidth = BUTTON_WIDTH;
+        int buttonHeight = BUTTON_HEIGHT;
+
+        MyButton button = new MyButton(16, text, buttonWidth, buttonHeight,
+            x, y, clickHandler);
+
+        if (anchorControl != null)
+        {
+            button.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+        }
+        else
+        {
+            button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
         }
 
-        private void VisibleChange(object? sender, EventArgs e)
-        {
-            if (!Search!.Visible && !UserInfo!.Visible)
-            {
-                Show();
-            }
-        }
-        private void InitializeForm()
-        {
-            MinimumSize = new(MINIMUM_WIDTH, MINIMUM_HEIGHT);
-            Size = new(MINIMUM_WIDTH, MINIMUM_HEIGHT);
-            BackColor = MyColor.DarkGreen;
-            bookPanelContainer.Size = new Size(Width - 30 - BUTTON_WIDTH - 30, Height - 50);
-            bookPanelContainer.BackColor = MyColor.Brown;
-            reader = new();
-            Search = new();
-            UserInfo = new(reader);
-            Resize += (s, e) =>
-            {
-                bookPanelContainer.Location = new Point(0, 0);
-                bookPanelContainer.Size = new Size(Width - 30 - BUTTON_WIDTH - 30, Height - 50);
-            };
-            FormClosing += Form1_FormClosing!;
-            Load += Form1_Load!;
+        Controls.Add(button);
+        button.BringToFront();
 
-            bookPanelContainer.Resize += BookPanelContainer_Resize;
+        return button;
+    }
 
-            Search.VisibleChanged += VisibleChange;
-            UserInfo.VisibleChanged += VisibleChange;
-            AllControlsOnForm = FormManager.GetAllControls(this);
-        }
-        private void InitializeAddButton()
+    private void DeleteGenresButton_Click(object? sender, EventArgs e)
+    {
+        if (isDeleteGenresPanelOpened)
         {
-            AddButton = new MyButton(20, "+", BUTTON_WIDTH, BUTTON_HEIGHT, Right - BUTTON_WIDTH - 30, Bottom - BUTTON_HEIGHT - 60, AddButton_Click);
-            Controls.Add(AddButton);
-            AddButton!.BringToFront();
+            DeleteGenresPanel.Hide();
         }
-        private void InitializeSearchButton()
+        else
         {
-            if (AddButton != null)
-            {
-                SearchButton = new MyButton(16, "Search", BUTTON_WIDTH, BUTTON_HEIGHT, Right - BUTTON_WIDTH - 30, AddButton.Top - BUTTON_HEIGHT - 20, SearchButton_Click);
-            }
-            Controls.Add(SearchButton);
-            SearchButton!.BringToFront();
+            DeleteGenresPanel.Show();
+            DeleteGenresPanel.UpdateGenresToGenresDeletingListBox();
+            DeleteGenresPanel.BringToFront();
         }
-        private void InitializeUserInfoButton()
+        isDeleteGenresPanelOpened = !isDeleteGenresPanelOpened;
+    }
+
+    private void AddButton_Click(object? sender, EventArgs e)
+    {
+        InputPanel panel = new(BookPanelContainer, null);
+        Controls.Add(panel);
+        panel.BringToFront();
+        panel.Location = new((Width - panel.Width) / 2, ((Height - panel.Height) / 2) - 20);
+
+        bool conditionForSwitching(Control c)
         {
-            if (SearchButton != null)
-            {
-                UserInfoButton = new MyButton(16, "User", BUTTON_WIDTH, BUTTON_HEIGHT, Right - BUTTON_WIDTH - 30, SearchButton.Top - BUTTON_HEIGHT - 20, UserInfoButton_Click);
-            }
-            Controls.Add(UserInfoButton);
-            UserInfoButton!.BringToFront();
+            return c != panel &&
+                c.Parent != panel.panel1 &&
+                c != panel.panel1;
         }
-        private void AddButton_Click(object? sender, EventArgs e)
+
+        List<Control> allControls = FormManager.GetAllControls(this);
+        FormManager.ControlSwitching(allControls, false, conditionForSwitching);
+    }
+
+    private void SearchButton_Click(object? sender, EventArgs e)
+    {
+        Hide();
+        Search!.Show();
+    }
+
+    private void UserInfoButton_Click(object? sender, EventArgs e)
+    {
+
+        if (Books.AllBooks.Count == 0)
         {
-            InputPanel panel = new(bookPanelContainer, null);
-            Controls.Add(panel);
-            panel.BringToFront();
-            panel.Location = new Point((Width - panel.Width) / 2, ((Height - panel.Height) / 2) - 20);
-            FormManager.ControlSwitching(FormManager.GetAllControls(this), false, c => c != panel && c.Parent != panel.panel1 && c != panel.panel1);
+            UserInfo.NoBooksInit();
+            UserInfo.infoPanel.Parent!.Controls.Add(UserInfo.noBooks);
+            UserInfo.infoPanel.Parent.Controls.Remove(UserInfo.infoPanel);
+            UserInfo.noBooks.Controls.Add(UserInfo.CloseButton);
         }
-        private void SearchButton_Click(object? sender, EventArgs e)
+        else if(UserInfo.Controls.Contains(UserInfo.noBooks))
         {
-            Hide();
-            Search!.Show();
-        }
-        private void UserInfoButton_Click(object? sender, EventArgs e)
-        {
+            UserInfo.Controls.Remove(UserInfo.noBooks);
+            UserInfo.noBooks.Parent!.Controls.Add(UserInfo.infoPanel);
+            UserInfo.infoPanel.BringToFront();
+            UserInfo.infoPanel.Controls.Add(UserInfo.CloseButton);
             reader!.UpdateInfo();
-
-            UserInfo!.LabelText_Init(reader);
-            if (Books.AllBooks.Count == 0)
-            {
-                UserInfo.NoBooksInit();
-            }
-            UserInfo.TopLevel = false;
-            Controls.Add(UserInfo!);
-            UserInfo.BringToFront();
-            UserInfo.Location = new Point((Width - UserInfo.Width) / 2, (Height - UserInfo.Height) / 2);
-            UserInfo.Anchor = AnchorStyles.None;
-            FormManager.ControlSwitching(FormManager.GetAllControls(this), false, c => c is not Form && c.Parent != UserInfo.infoPanel && c != UserInfo.infoPanel);
-            UserInfo!.Show();
+            UserInfo!.LabelsInit(reader);
         }
-        private void BookPanelContainer_Resize(object? sender, EventArgs e)
+        else
         {
-            if (bookPanelContainer.Width == previousWidth) return;
-            Form1.LocateBook(bookPanelContainer!, Books.AllBooks.OfType<Control>());
-            previousWidth = bookPanelContainer.Width;
+            UserInfo.infoPanel.BringToFront();
+            UserInfo.infoPanel.Controls.Add(UserInfo.CloseButton);
+            reader!.UpdateInfo();
+            UserInfo!.LabelsInit(reader);
         }
-        public static void LocateBook(Panel control, IEnumerable<Control> books)
-        {
-            if (_isLocatingBooks) return;
-            _isLocatingBooks = true;
 
-            Positioning.panelsPerRow = Positioning.CalculatePanelsPerRow(control!.Width);
+        int x = UserInfo.CloseButton.Parent!.Width - UserInfo.CloseButton.Width - 5;
+        int y = 5;
 
-            Positioning.currentRow = 0;
-            Positioning.currentColumn = 0;
+        UserInfo.CloseButton.Location = new(x, y);
+        UserInfo.CloseButton.BringToFront();
+        UserInfo.TopLevel = false;
+        Controls.Add(UserInfo!);
+        UserInfo.BringToFront();
+        UserInfo.Location = new Point((Width - UserInfo.Width) / 2, (Height - UserInfo.Height) / 2);
+        UserInfo.Anchor = AnchorStyles.None;
+        FormManager.ControlSwitching(FormManager.GetAllControls(this), false, 
+            c => c is not Form && 
+            c.Parent != UserInfo.infoPanel && 
+            c != UserInfo.infoPanel &&
+            c.Parent != UserInfo.noBooks &&
+            c != UserInfo.noBooks);
+        UserInfo!.Show();
+    }
+    private void BookPanelContainer_Resize(object? sender, EventArgs e)
+    {
+        if (BookPanelContainer.Width == previousWidth) return;
+        Books.SetLocationForAllBooks(BookPanelContainer!, Books.AllBooks);
+        previousWidth = BookPanelContainer.Width;
+    }
 
-            control.AutoScrollPosition = new Point(0, 0);
-
-            foreach (BookPanel book in books.Where(book => book is BookPanel).Cast<BookPanel>())
-            {
-                int x = Positioning.GetCoordinateForBook(Coordinates.X) - control.AutoScrollPosition.X;
-                int y = Positioning.GetCoordinateForBook(Coordinates.Y) - control.AutoScrollPosition.Y;
-                book.Location = new Point(x, y);
-                Positioning.currentColumn++;
-                Positioning.CheckColumnAndRow();
-            }
-            _isLocatingBooks = false;
-        }
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "booksStoring.txt"); ;
-
-            using StreamWriter writer = new(filePath);
-            foreach (var book in Books.AllBooks)
-            {
-                string line = $"{book.book.NameOfBook}|{book.book.Author}|{book.book.Publisher}|" +
-                    $"{book.book.Year}|{book.book.Sector}|{book.book.Origin}|{book.book.Novelty}|" +
-                    $"{book.book.GenreOfBook}|{book.book.Grade}|{book.book.Status}";
-                writer.WriteLine(line);
-            }
-        }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "booksStoring.txt");
-
-            if (File.Exists(filePath))
-            {
-                string[] lines = File.ReadAllLines(filePath);
-
-                string[,] booksArray = new string[lines.Length, 10];
-
-
-                for (int i = 0; i < lines.Length; i++)
-                {
-                    string[] values = lines[i].Split('|');
-
-                    for (int j = 0; j < values.Length; j++)
-                    {
-                        booksArray[i, j] = values[j];
-                    }
-                }
-
-                for (int i = 0; i < booksArray.GetLength(0); i++)
-                {
-                    Books.AllBooks.Add(new BookPanel(
-                        booksArray[i, (int)NAME],
-                        booksArray[i, (int)AUTHOR],
-                        booksArray[i, (int)PUBLISHER],
-                        booksArray[i, (int)YEAR],
-                        booksArray[i, (int)SECTOR],
-                        booksArray[i, (int)ORIGIN],
-                        booksArray[i, (int)NOVELTY],
-                        booksArray[i, (int)GENRE],
-                        booksArray[i, (int)GRADE],
-                        booksArray[i, (int)STATUS],
-                        bookPanelContainer!));
-                }
-                Form1.LocateBook(bookPanelContainer!, Books.AllBooks.OfType<BookPanel>());
-            }
-        }
+    private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        Books.WriteAllBooksToFile();
+    }
+    private void Form1_Load(object sender, EventArgs e)
+    {
+        Books.FillBooksFromFile(BookPanelContainer);
     }
 }

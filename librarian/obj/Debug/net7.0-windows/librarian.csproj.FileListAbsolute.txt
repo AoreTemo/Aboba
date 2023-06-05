@@ -21,3 +21,5 @@ D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.BookPanel.res
 D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.Forms.UserPage.resources
 D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.Properties.Resources.resources
 D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.Panels.AllInfoAboutBook.resources
+D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.Panels.DeleteGenresPanel.resources
+D:\Coursach\librarian\librarian\obj\Debug\net7.0-windows\librarian.Book.resources

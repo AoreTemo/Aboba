@@ -1,4 +1,4 @@
-﻿namespace librarian;
+﻿namespace librarian.Genres;
 
 internal static class GenresForListBox
 {

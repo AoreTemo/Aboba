@@ -2,16 +2,18 @@
 {
     public class Reader
     {
-        private static BookPanel? favoriteBookByGrade;
-        public string FavoriteBook { get; set; } = "";
-        public string FavoriteAuthor { get; set; } = "";
-        public string FavoriteGenre { get; set; } = "";
-        public int CountOfBooks { get; private set; } = 0;
+        private BookPanel? favoriteBookByGrade;
 
         public Reader()
         {
             UpdateInfo();
         }
+
+        public string FavoriteBook { get; private set; } = "";
+        public string FavoriteAuthor { get; private set; } = "";
+        public string FavoriteGenre { get; private set; } = "";
+        public int CountOfBooks { get; private set; } = 0;
+
         public void UpdateInfo()
         {
             if (Books.AllBooks.Count != 0)
@@ -19,61 +21,74 @@
                 FavoriteBook = GetFavoriteBook();
                 FavoriteAuthor = GetFavoriteAuthor();
                 FavoriteGenre = GetFavoriteGenre();
-                CountOfBooks = Books.AllBooks.Count;
+                CountOfBooks = Books.Count;
             }
         }
 
-        public static string GetFavoriteBook()
+        public string GetFavoriteBook()
         {
-            List<string> result = new ();
+            List<string> result = new List<string>();
             int maxGrade = 0;
 
-            foreach (var book in Books.AllBooks)
+            foreach (var Book in Books.AllBooks)
             {
-                if (int.Parse(book.book.Grade) > maxGrade)
+                if (int.Parse(Book.Book.Grade) > maxGrade)
                 {
                     result.Clear();
-                    maxGrade = int.Parse(book.book.Grade);
-                    favoriteBookByGrade = book;
-                    result.Add(book.book.NameOfBook);
-                    result.Add(book.book.Author);
+                    maxGrade = int.Parse(Book.Book.Grade);
+                    favoriteBookByGrade = Book;
+                    result.Add(Book.Book.NameOfBook);
+                    result.Add(Book.Book.Author);
                 }
             }
 
-            return string.Concat($"{((result[0].Length > 24) ? result[0][..21] + "..." : result[0])}\n",
-                $"{((result[1].Length > 24) ? result[1][..21] + "..." : result[1])}");
+            return $"{((result[0].Length > 24) ? result[0][..21] + "..." : result[0])}\n" +
+                    $"{((result[1].Length > 24) ? result[1][..21] + "..." : result[1])}";
         }
-        public static string GetFavoriteAuthor()
+
+        public string GetFavoriteAuthor()
         {
-            return GetMostCommonValue(Books.AllBooks, book => book.book.Author);
+            return GetMostCommonValue(Books.AllBooks, Book => Book.Book.Author);
         }
-        public static string GetFavoriteGenre()
+
+        public string GetFavoriteGenre()
         {
-            return GetMostCommonValue(Books.AllBooks, book => book.book.GenreOfBook);
+            string favoriteGenre = GetMostCommonValue(Books.AllBooks, Book => Book.Book.GenreOfBook);
+
+            if (favoriteGenre == "")
+            {
+                favoriteGenre = $"Genre of {GetFavoriteBook().Split("\n")[0]}";
+            }
+
+            return favoriteGenre;
         }
-        public static string GetMostCommonValue(List<BookPanel> books, Func<BookPanel, string> propertySelector)
+
+        public string GetMostCommonValue(List<BookPanel> Books, Func<BookPanel, string> propertySelector)
         {
             string result = "";
-            Dictionary<string, int> values = new();
+            Dictionary<string, int> values = new Dictionary<string, int>();
 
-            foreach (var book in books)
+            foreach (var Book in Books)
             {
-                string value = propertySelector(book);
-                if (!values.ContainsKey(value))
+                string[] genres = propertySelector(Book).Split(',');
+                foreach (string genre in genres)
                 {
-                    values.Add(value, 1);
-                }
-                else
-                {
-                    values[value]++;
+                    string value = genre.Trim();
+                    if (!values.ContainsKey(value))
+                    {
+                        values.Add(value, 1);
+                    }
+                    else
+                    {
+                        values[value]++;
+                    }
                 }
             }
 
-            if (values.Values.All(val => val <= 1))
+            if (values.Values.All(val => val == values.Values.First()))
             {
                 result = propertySelector(favoriteBookByGrade!);
-                return $"{((result.Length > 24) ? result[..21] + "..." : result)}\n"; ;
-
+                return $"{((result.Length > 24) ? result[..21] + "..." : result)}";
             }
 
             int maxCount = 0;

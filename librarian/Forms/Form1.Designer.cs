@@ -1,4 +1,6 @@
-﻿namespace librarian
+﻿using librarian.Panels;
+
+namespace librarian
 {
     partial class Form1
     {
@@ -29,23 +31,23 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            bookPanelContainer = new Panel();
+            BookPanelContainer = new();
             SuspendLayout();
             // 
-            // bookPanelContainer
+            // BookPanelContainer
             // 
-            bookPanelContainer.AutoScroll = true;
-            bookPanelContainer.Location = new Point(-3, -5);
-            bookPanelContainer.Name = "bookPanelContainer";
-            bookPanelContainer.Size = new Size(811, 456);
-            bookPanelContainer.TabIndex = 0;
+            BookPanelContainer.AutoScroll = true;
+            BookPanelContainer.Location = new Point(-3, -5);
+            BookPanelContainer.Name = "BookPanelContainer";
+            BookPanelContainer.Size = new Size(811, 456);
+            BookPanelContainer.TabIndex = 0;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(bookPanelContainer);
+            Controls.Add(BookPanelContainer);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Library";
@@ -54,6 +56,6 @@
 
         #endregion
 
-        public Panel bookPanelContainer;
+        public CustomPanel BookPanelContainer;
     }
 }

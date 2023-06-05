@@ -1,121 +1,205 @@
-﻿using librarian.Panels;
+﻿using librarian.Forms;
+using librarian.Panels;
 
-namespace librarian;
-
-public partial class BookPanel : UserControl
+namespace librarian
 {
-    public InputPanel? editPanel;
-    private readonly Control EditPanelControl;
-    private readonly Control parent;
-    private readonly AllInfoAboutBook AllInfo = new();
-    public Book book = new();
-    public BookPanel(string nameOfBook, string author, string publisher, string year,
-                     string sector, string origin, string novelty, string genre, string grade, string status,
-                     Control control)
+    public partial class BookPanel : UserControl
     {
-        parent = control;
-        InitializeComponent();
-        Book_Initializator(nameOfBook, author, publisher, year, sector, origin, novelty, genre, grade, status);
-        parent.Controls.Add(this);
-        EditPanelControl = parent.Parent!;
-        panel1.BackColor = MyColor.Coral;
-    }
-    public BookPanel(BookPanel other, Control control)
-    {
-        InitializeComponent();
-        parent = control;
-        EditPanelControl = parent.Parent!;
-        editPanel = other.editPanel;
-        book = other.book;
-        BookLabels_Init(other.book.NameOfBook, other.book.Author, other.book.Publisher, other.book.Year, other.book.Sector, other.book.Origin,
-            other.book.Novelty, other.book.GenreOfBook, other.book.Grade, other.book.Status);
-    }
-    private void Book_Initializator(string nameOfBook, string author, string publisher, string year,
-                     string sector, string origin, string novelty, string genre, string grade, string status)
-    {
-        book.Properties_Init(nameOfBook, author, publisher, year, genre, sector, origin, novelty, grade, status);
-        BookLabels_Init(book.NameOfBook, book.Author, book.Publisher, book.Year, book.Sector, book.Origin,
-            book.Novelty, book.GenreOfBook, book.Grade, book.Status);
-        Size = new Size(Positioning.PANEL_WIDTH, Positioning.PANEL_HEIGHT);
-        panel1.Size = new Size(Positioning.PANEL_WIDTH, Positioning.PANEL_HEIGHT); ;
-    }
-    private void BookLabels_Init(string nameOfBook, string author, string publisher, string year,
-                        string sector, string origin, string novelty, string genre, string grade, string status)
-    {
-        AllInfo.NameInfo.Text = nameOfBook.Length > 16 ? nameOfBook[..13] + "..." : nameOfBook;
-        AllInfo.AuthorInfo.Text = author.Length > 16 ? author[..13] + "..." : author;
-        AllInfo.PublisherInfo.Text = publisher.Length > 16 ? publisher[..13] + "..." : publisher;
-        AllInfo.YearInfo.Text = year;
-        AllInfo.SectorInfo.Text = sector;
-        AllInfo.OriginInfo.Text = origin;
-        AllInfo.NoveltyInfo.Text = novelty;
-        AllInfo.GenreInfo.Text = genre;
-        AllInfo.GradeInfo.Text = grade;
-        AllInfo.StatusInfo.Text = status;
-        AllInfo.Anchor = AnchorStyles.None;
-        NameOfBookLabel.Text = nameOfBook.Length > 15 ? nameOfBook[..12] + "..." : nameOfBook;
-        AuthorLabel.Text = author.Length > 22 ? author[..19] + "..." : author;
-        YearLabel.Text = year;
-    }
-    private void EditButton_Click(object sender, EventArgs e)
-    {
-        editPanel = new InputPanel(parent, SaveChanges_Click!);
-        editPanel.saveButton.Location = new Point((editPanel.Width - editPanel.saveButton.Width) / 2, 2);
-        editPanel.NameTextBox.Text = book.NameOfBook;
-        editPanel.AuthorTextBox.Text = book.Author;
-        editPanel.PublisherTextBox.Text = book.Publisher;
-        editPanel.YearTextBox.Text = book.Year;
-        editPanel.GenreComboBox.SelectedItem = book.GenreOfBook;
-        editPanel.GradeComboBox.SelectedItem = book.Grade;
-        editPanel.NoveltyComboBox.SelectedItem = book.Novelty;
-        editPanel.SectorComboBox.SelectedItem = book.Sector;
-        editPanel.OriginComboBox.SelectedItem = book.Origin;
-        editPanel.StatusComboBox.SelectedItem = book.Status;
+        public AllInfoAboutBook AllInfo = new();
+        public InputPanel EditPanel;
+        public Book Book = new();
 
-        DeleteButton_Init();
-        EditPanelControl.Controls.Add(editPanel);
-        editPanel.BringToFront();
-        editPanel.Location = new Point((EditPanelControl.Width - editPanel.Width) / 2, ((EditPanelControl.Height - editPanel.Height) / 2) - 20);
-        FormManager.ControlSwitching(FormManager.GetAllControls(EditPanelControl), false, c => c != editPanel && c.Parent != editPanel && c.Parent != editPanel.panel1);
+        private readonly Control editPanelControl;
+        private readonly Control parent;
 
-    }
-    private void DeleteButton_Init()
-    {
-        Button deleteButton = new()
+        public BookPanel(string nameOfBook, string author, string publisher,
+            string year, string sector, string origin, string novelty,
+            string genre, string grade, string status, Control control)
         {
-            Text = "delete",
-            Font = new Font("Segoe UI", 10),
-            Size = new Size(editPanel!.saveButton.Width, editPanel!.saveButton.Height),
-            BackColor = editPanel.saveButton.BackColor,
-            FlatStyle = FlatStyle.Flat,
-        };
-        deleteButton.Click += DeleteButton_Click;
-        editPanel.panel1.Controls.Add(deleteButton);
-        deleteButton.Location = new Point(2, 2);
-    }
-    private void SaveChanges_Click(object sender, EventArgs e)
-    {
-        FormManager.ControlSwitching(FormManager.GetAllControls(EditPanelControl), true, c => !c.Enabled);
-        Book_Initializator(editPanel!.NameTextBox.Text, editPanel.AuthorTextBox.Text, editPanel.PublisherTextBox.Text,
-           editPanel.YearTextBox.Text, editPanel.SectorComboBox.Text, editPanel.OriginComboBox.Text,
-           editPanel.NoveltyComboBox.Text, string.Join(", ", editPanel.GenreComboBox.CheckedItems.Cast<string>()), editPanel.GradeComboBox.Text, editPanel.StatusComboBox.Text);
-        EditPanelControl!.Controls.Remove(editPanel);
-    }
-    private void DeleteButton_Click(object? sender, EventArgs e)
-    {
-        EditPanelControl!.Controls.Remove(editPanel);
-        FormManager.ControlSwitching(FormManager.GetAllControls(EditPanelControl), true, c => !c.Enabled);
-        parent.Controls.Remove(this);
-        Books.AllBooks.Remove(this);
-        if (parent != null && parent is Panel parentPanel)
-            Form1.LocateBook(parentPanel, Books.AllBooks.OfType<Control>());
-    }
-    private void MoreButton_Click(object sender, EventArgs e)
-    {
-        EditPanelControl.Controls.Add(AllInfo);
-        AllInfo.Location = new Point((EditPanelControl.Width - AllInfo.Width) / 2, ((EditPanelControl.Height - AllInfo.Height) / 2) - 20);
-        AllInfo.BringToFront();
-        AllInfo.CloseButton.Click += (s, e) => FormManager.ControlSwitching(FormManager.GetAllControls(EditPanelControl), true, c => c is MyButton);
-        FormManager.ControlSwitching(FormManager.GetAllControls(EditPanelControl), false, c => c != AllInfo && c.Parent != AllInfo && c.Parent != AllInfo.panel1);
+            parent = control;
+
+            InitializeComponent();
+            Book_Initializator(nameOfBook, author, publisher, year, sector,
+                origin, novelty, genre, grade, status);
+
+            EditPanel = new(parent.Parent!, SaveChanges_Click!);
+            parent.Controls.Add(this);
+
+            editPanelControl = parent.Parent!;
+            panel1.BackColor = MyColor.Coral;
+        }
+
+        public BookPanel(BookPanel other, Control control)
+        {
+            InitializeComponent();
+
+            parent = control;
+            editPanelControl = parent.Parent!;
+            EditPanel = other.EditPanel;
+            Book = other.Book;
+
+            BookLabels_Init(other.Book.NameOfBook, other.Book.Author,
+                other.Book.Publisher, other.Book.Year, other.Book.Sector,
+                other.Book.Origin, other.Book.Novelty, other.Book.GenreOfBook,
+                other.Book.Grade, other.Book.Status);
+        }
+
+        private void Book_Initializator(string nameOfBook, string author,
+            string publisher, string year, string sector, string origin,
+            string novelty, string genre, string grade, string status)
+        {
+            Book.Properties_Init(nameOfBook, author, publisher, year,
+                genre, sector, origin, novelty, grade, status);
+            BookLabels_Init(Book.NameOfBook, Book.Author, Book.Publisher,
+                Book.Year, Book.Sector, Book.Origin, Book.Novelty,
+                Book.GenreOfBook, Book.Grade, Book.Status);
+
+            Size = new Size(Positioning.PANEL_WIDTH, Positioning.PANEL_HEIGHT);
+            panel1.Size = new Size(Positioning.PANEL_WIDTH, Positioning.PANEL_HEIGHT);
+        }
+
+        private void BookLabels_Init(string nameOfBook, string author, string publisher,
+            string year, string sector, string origin, string novelty,
+            string genre, string grade, string status)
+        {
+            AllInfo.NameInfo.Text = nameOfBook;
+            AllInfo.AuthorInfo.Text = author;
+            AllInfo.PublisherInfo.Text = publisher;
+            AllInfo.YearInfo.Text = year;
+            AllInfo.SectorInfo.Text = sector;
+            AllInfo.OriginInfo.Text = origin;
+            AllInfo.NoveltyInfo.Text = novelty;
+            AllInfo.GenreInfo.Text = genre;
+            AllInfo.GradeInfo.Text = grade;
+            AllInfo.StatusInfo.Text = status;
+            AllInfo.Anchor = AnchorStyles.None;
+
+            NameOfBookLabel.Text = nameOfBook;
+            AuthorLabel.Text = author;
+            YearLabel.Text = year;
+        }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+
+            int EditPanelXPos = (EditPanel.Width - EditPanel.saveButton.Width) / 2;
+            int EditPanelYPos = 2;
+
+            EditPanel.saveButton.Location = new Point(EditPanelXPos, EditPanelYPos);
+            EditPanel.NameTextBox.Text = Book.NameOfBook;
+            EditPanel.AuthorTextBox.Text = Book.Author;
+            EditPanel.PublisherTextBox.Text = Book.Publisher;
+            EditPanel.YearTextBox.Text = Book.Year;
+            EditPanel.GenreComboBox.SelectedItem = Book.GenreOfBook;
+            EditPanel.GradeComboBox.SelectedItem = Book.Grade;
+            EditPanel.NoveltyComboBox.SelectedItem = Book.Novelty;
+            EditPanel.SectorComboBox.SelectedItem = Book.Sector;
+            EditPanel.OriginComboBox.SelectedItem = Book.Origin;
+            EditPanel.StatusComboBox.SelectedItem = Book.Status;
+
+            string[] BookGenres = Book.GenreOfBook.Split(new string[] { ", " }, 
+                StringSplitOptions.RemoveEmptyEntries);
+
+            List<string> genresList = new (EditPanel.GenreComboBox.Items.Cast<string>());
+
+            foreach (var genre in genresList.Where(genre => BookGenres.Contains(genre)))
+            {
+                int index = EditPanel.GenreComboBox.Items.IndexOf(genre);
+                EditPanel.GenreComboBox.SetItemChecked(index, true);
+            }
+
+            if (EditPanel.GenreComboBox.SelectedItems.Count > 0)
+                EditPanel.saveButton.Enabled = true;
+
+            DeleteButton_Init();
+            editPanelControl.Controls.Add(EditPanel);
+            EditPanel.BringToFront();
+
+            int xEditPanelPos = (editPanelControl.Width - EditPanel.Width) / 2;
+            int yEditPanelPos = ((editPanelControl.Height - EditPanel.Height) / 2) - 20;
+
+            EditPanel.Location = new(xEditPanelPos, yEditPanelPos);
+
+            bool conditionForSwitching(Control c)
+            {
+                return c != EditPanel &&
+                       c.Parent != EditPanel &&
+                       c.Parent != EditPanel!.panel1;
+            }
+
+            FormManager.ControlSwitching(FormManager.GetAllControls(editPanelControl), 
+                false, conditionForSwitching);
+        }
+
+        private void DeleteButton_Init()
+        {
+            Button deleteButton = new()
+            {
+                Text = "delete",
+                Font = new ("Segoe UI", 10),
+                Size = new (EditPanel!.saveButton.Width, EditPanel!.saveButton.Height),
+                BackColor = EditPanel.saveButton.BackColor,
+                FlatStyle = FlatStyle.Flat,
+            };
+
+            deleteButton.Click += DeleteButton_Click;
+            deleteButton.Location = new(2, 2);
+
+            EditPanel.panel1.Controls.Add(deleteButton);
+        
+            deleteButton.BringToFront();
+        }
+
+        private void SaveChanges_Click(object sender, EventArgs e)
+        {
+            FormManager.ControlSwitching(FormManager.GetAllControls(editPanelControl), 
+                true, c => !c.Enabled);
+
+            Book_Initializator(EditPanel!.NameTextBox.Text, EditPanel.AuthorTextBox.Text,
+               EditPanel.PublisherTextBox.Text, EditPanel.YearTextBox.Text,
+               EditPanel.SectorComboBox.Text, EditPanel.OriginComboBox.Text,
+               EditPanel.NoveltyComboBox.Text,
+               string.Join(", ", EditPanel.GenreComboBox.CheckedItems.Cast<string>()),
+               EditPanel.GradeComboBox.Text, EditPanel.StatusComboBox.Text);
+
+            editPanelControl!.Controls.Remove(EditPanel);
+        }
+        private void DeleteButton_Click(object? sender, EventArgs e)
+        {
+            FormManager.ControlSwitching(FormManager.GetAllControls(editPanelControl), 
+                true, c => !c.Enabled);
+
+            editPanelControl!.Controls.Remove(EditPanel);
+            parent.Controls.Remove(this);
+            Books.AllBooks.Remove(this);
+
+            if (parent is Panel parentPanel)
+                Positioning.LocateBook(parentPanel, Books.AllBooks.OfType<Control>());
+        }
+        private void MoreButton_Click(object sender, EventArgs e)
+        {
+            int x = (editPanelControl.Width - AllInfo.Width) / 2;
+            int y = ((editPanelControl.Height - AllInfo.Height) / 2) - 20;
+
+            AllInfo.Location = new Point(x, y);
+            AllInfo.CloseButton.Click += (s, e) =>
+            {
+                FormManager.ControlSwitching(FormManager.GetAllControls(editPanelControl), 
+                    true, c => c is MyButton);
+            };
+
+            editPanelControl.Controls.Add(AllInfo);
+            AllInfo.BringToFront();
+
+            bool conditionForSwitching(Control c)
+            {
+                return c != AllInfo &&
+                       c.Parent != AllInfo &&
+                       c.Parent != AllInfo.panel1;
+            }
+
+            FormManager.ControlSwitching(FormManager.GetAllControls(editPanelControl), 
+                false, conditionForSwitching);
+        }
     }
 }

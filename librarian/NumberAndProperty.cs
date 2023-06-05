@@ -2,30 +2,30 @@
 {
     internal class NumberAndProperty
     {
-        private readonly Book _book;
-        private readonly string[] _bookProperties;
+        private readonly Book _Book;
+        private readonly string[] _BookProperties;
 
-        public NumberAndProperty(Book book)
+        public NumberAndProperty(Book Book)
         {
-            _book = book;
-            _bookProperties = new string[]
+            _Book = Book;
+            _BookProperties = new string[]
             {
-                _book.NameOfBook,
-                _book.Author,
-                _book.GenreOfBook,
-                _book.Year,
-                _book.Publisher,
-                _book.Novelty,
-                _book.Sector,
-                _book.Grade,
-                _book.Origin,
-                _book.Status
+                _Book.NameOfBook,
+                _Book.Author,
+                _Book.GenreOfBook,
+                _Book.Year,
+                _Book.Publisher,
+                _Book.Novelty,
+                _Book.Sector,
+                _Book.Grade,
+                _Book.Origin,
+                _Book.Status
             };
         }
 
         public string GetBookProperty(int indexOfProperty)
         {
-            return _bookProperties[indexOfProperty];
+            return _BookProperties[indexOfProperty];
         }
     }
 }

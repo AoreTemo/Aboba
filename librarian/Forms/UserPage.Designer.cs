@@ -34,7 +34,7 @@
             FavoriteGenreTitle = new Label();
             AmountOfBooksTitle = new Label();
             infoPanel = new Panel();
-            closeButton = new Button();
+            CloseButton = new Button();
             pictureBox4 = new PictureBox();
             pictureBox3 = new PictureBox();
             pictureBox2 = new PictureBox();
@@ -48,13 +48,12 @@
             // FavoriteBookTitle
             // 
             FavoriteBookTitle.Anchor = AnchorStyles.None;
-            FavoriteBookTitle.AutoSize = true;
             FavoriteBookTitle.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
             FavoriteBookTitle.Location = new Point(88, 54);
             FavoriteBookTitle.Name = "FavoriteBookTitle";
-            FavoriteBookTitle.Size = new Size(206, 41);
+            FavoriteBookTitle.Size = new Size(338, 151);
             FavoriteBookTitle.TabIndex = 1;
-            FavoriteBookTitle.Text = "Favorite book:";
+            FavoriteBookTitle.Text = "Favorite Book:";
             // 
             // pictureBox1
             // 
@@ -68,22 +67,20 @@
             // FavoriteAuthorTitle
             // 
             FavoriteAuthorTitle.Anchor = AnchorStyles.None;
-            FavoriteAuthorTitle.AutoSize = true;
             FavoriteAuthorTitle.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
             FavoriteAuthorTitle.Location = new Point(88, 213);
             FavoriteAuthorTitle.Name = "FavoriteAuthorTitle";
-            FavoriteAuthorTitle.Size = new Size(224, 41);
+            FavoriteAuthorTitle.Size = new Size(338, 128);
             FavoriteAuthorTitle.TabIndex = 2;
             FavoriteAuthorTitle.Text = "Favorite author:";
             // 
             // FavoriteGenreTitle
             // 
             FavoriteGenreTitle.Anchor = AnchorStyles.None;
-            FavoriteGenreTitle.AutoSize = true;
             FavoriteGenreTitle.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
             FavoriteGenreTitle.Location = new Point(88, 357);
             FavoriteGenreTitle.Name = "FavoriteGenreTitle";
-            FavoriteGenreTitle.Size = new Size(214, 41);
+            FavoriteGenreTitle.Size = new Size(338, 136);
             FavoriteGenreTitle.TabIndex = 3;
             FavoriteGenreTitle.Text = "Favorite genre:";
             // 
@@ -96,14 +93,14 @@
             AmountOfBooksTitle.Name = "AmountOfBooksTitle";
             AmountOfBooksTitle.Size = new Size(257, 41);
             AmountOfBooksTitle.TabIndex = 4;
-            AmountOfBooksTitle.Text = "Amount of books:";
+            AmountOfBooksTitle.Text = "Amount of Books:";
             // 
             // infoPanel
             // 
             infoPanel.Anchor = AnchorStyles.None;
-            infoPanel.BackColor = MyColor.Genoa;
+            infoPanel.BackColor = Color.FromArgb(58, 117, 109);
             infoPanel.BorderStyle = BorderStyle.FixedSingle;
-            infoPanel.Controls.Add(closeButton);
+            infoPanel.Controls.Add(CloseButton);
             infoPanel.Controls.Add(pictureBox4);
             infoPanel.Controls.Add(pictureBox3);
             infoPanel.Controls.Add(pictureBox2);
@@ -117,18 +114,18 @@
             infoPanel.Size = new Size(866, 653);
             infoPanel.TabIndex = 5;
             // 
-            // closeButton
+            // CloseButton
             // 
-            closeButton.BackColor = MyColor.Red;
-            closeButton.FlatStyle = FlatStyle.Flat;
-            closeButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            closeButton.Location = new Point(821, 3);
-            closeButton.Name = "closeButton";
-            closeButton.Size = new Size(40, 37);
-            closeButton.TabIndex = 6;
-            closeButton.Text = "X";
-            closeButton.UseVisualStyleBackColor = false;
-            closeButton.Click += CloseButton_Click;
+            CloseButton.BackColor = Color.FromArgb(203, 25, 64);
+            CloseButton.FlatStyle = FlatStyle.Flat;
+            CloseButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            CloseButton.Location = new Point(821, 3);
+            CloseButton.Name = "CloseButton";
+            CloseButton.Size = new Size(40, 37);
+            CloseButton.TabIndex = 6;
+            CloseButton.Text = "X";
+            CloseButton.UseVisualStyleBackColor = false;
+            CloseButton.Click += CloseButton_Click;
             // 
             // pictureBox4
             // 
@@ -188,6 +185,6 @@
         private PictureBox pictureBox4;
         private PictureBox pictureBox3;
         private PictureBox pictureBox2;
-        private Button closeButton;
+        public Button CloseButton;
     }
 }

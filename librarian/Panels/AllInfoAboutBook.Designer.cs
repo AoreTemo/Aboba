@@ -98,10 +98,10 @@
             // 
             // GenreInfo
             // 
-            GenreInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            GenreInfo.Location = new Point(29, 635);
+            GenreInfo.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            GenreInfo.Location = new Point(29, 567);
             GenreInfo.Name = "GenreInfo";
-            GenreInfo.Size = new Size(235, 71);
+            GenreInfo.Size = new Size(235, 145);
             GenreInfo.TabIndex = 41;
             GenreInfo.Text = "Genre";
             // 
@@ -109,7 +109,7 @@
             // 
             StatusInfo.AutoSize = true;
             StatusInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            StatusInfo.Location = new Point(29, 540);
+            StatusInfo.Location = new Point(29, 471);
             StatusInfo.Name = "StatusInfo";
             StatusInfo.Size = new Size(88, 37);
             StatusInfo.TabIndex = 40;
@@ -119,7 +119,7 @@
             // 
             GradeInfo.AutoSize = true;
             GradeInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            GradeInfo.Location = new Point(300, 635);
+            GradeInfo.Location = new Point(300, 567);
             GradeInfo.Name = "GradeInfo";
             GradeInfo.Size = new Size(89, 37);
             GradeInfo.TabIndex = 39;
@@ -129,7 +129,7 @@
             // 
             NoveltyInfo.AutoSize = true;
             NoveltyInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            NoveltyInfo.Location = new Point(29, 403);
+            NoveltyInfo.Location = new Point(29, 360);
             NoveltyInfo.Name = "NoveltyInfo";
             NoveltyInfo.Size = new Size(109, 37);
             NoveltyInfo.TabIndex = 38;
@@ -139,7 +139,7 @@
             // 
             OriginInfo.AutoSize = true;
             OriginInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            OriginInfo.Location = new Point(300, 403);
+            OriginInfo.Location = new Point(300, 360);
             OriginInfo.Name = "OriginInfo";
             OriginInfo.Size = new Size(91, 37);
             OriginInfo.TabIndex = 37;
@@ -149,7 +149,7 @@
             // 
             SectorInfo.AutoSize = true;
             SectorInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            SectorInfo.Location = new Point(300, 540);
+            SectorInfo.Location = new Point(300, 471);
             SectorInfo.Name = "SectorInfo";
             SectorInfo.Size = new Size(91, 37);
             SectorInfo.TabIndex = 36;
@@ -159,7 +159,7 @@
             // 
             YearInfo.AutoSize = true;
             YearInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            YearInfo.Location = new Point(300, 270);
+            YearInfo.Location = new Point(300, 243);
             YearInfo.Name = "YearInfo";
             YearInfo.Size = new Size(198, 37);
             YearInfo.TabIndex = 35;
@@ -167,31 +167,28 @@
             // 
             // PublisherInfo
             // 
-            PublisherInfo.AutoSize = true;
-            PublisherInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            PublisherInfo.Location = new Point(29, 270);
+            PublisherInfo.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            PublisherInfo.Location = new Point(29, 243);
             PublisherInfo.Name = "PublisherInfo";
-            PublisherInfo.Size = new Size(126, 37);
+            PublisherInfo.Size = new Size(235, 80);
             PublisherInfo.TabIndex = 34;
             PublisherInfo.Text = "Publisher";
             // 
             // AuthorInfo
             // 
-            AuthorInfo.AutoSize = true;
-            AuthorInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            AuthorInfo.Location = new Point(300, 129);
+            AuthorInfo.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            AuthorInfo.Location = new Point(300, 104);
             AuthorInfo.Name = "AuthorInfo";
-            AuthorInfo.Size = new Size(98, 37);
+            AuthorInfo.Size = new Size(235, 102);
             AuthorInfo.TabIndex = 33;
             AuthorInfo.Text = "Author";
             // 
             // NameInfo
             // 
-            NameInfo.AutoSize = true;
-            NameInfo.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            NameInfo.Location = new Point(29, 129);
+            NameInfo.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            NameInfo.Location = new Point(29, 104);
             NameInfo.Name = "NameInfo";
-            NameInfo.Size = new Size(88, 37);
+            NameInfo.Size = new Size(235, 102);
             NameInfo.TabIndex = 32;
             NameInfo.Text = "Name";
             // 
@@ -199,7 +196,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(29, 598);
+            label2.Location = new Point(29, 530);
             label2.Name = "label2";
             label2.Size = new Size(88, 37);
             label2.TabIndex = 31;
@@ -209,7 +206,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(29, 488);
+            label1.Location = new Point(29, 425);
             label1.Name = "label1";
             label1.Size = new Size(88, 37);
             label1.TabIndex = 30;
@@ -219,7 +216,7 @@
             // 
             GradeLabel.AutoSize = true;
             GradeLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            GradeLabel.Location = new Point(300, 598);
+            GradeLabel.Location = new Point(300, 530);
             GradeLabel.Name = "GradeLabel";
             GradeLabel.Size = new Size(89, 37);
             GradeLabel.TabIndex = 29;
@@ -229,7 +226,7 @@
             // 
             NoveltyLabel.AutoSize = true;
             NoveltyLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            NoveltyLabel.Location = new Point(29, 351);
+            NoveltyLabel.Location = new Point(29, 323);
             NoveltyLabel.Name = "NoveltyLabel";
             NoveltyLabel.Size = new Size(109, 37);
             NoveltyLabel.TabIndex = 28;
@@ -239,7 +236,7 @@
             // 
             OriginLabel.AutoSize = true;
             OriginLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            OriginLabel.Location = new Point(300, 351);
+            OriginLabel.Location = new Point(300, 323);
             OriginLabel.Name = "OriginLabel";
             OriginLabel.Size = new Size(91, 37);
             OriginLabel.TabIndex = 27;
@@ -249,7 +246,7 @@
             // 
             SectorLabel.AutoSize = true;
             SectorLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            SectorLabel.Location = new Point(300, 488);
+            SectorLabel.Location = new Point(300, 425);
             SectorLabel.Name = "SectorLabel";
             SectorLabel.Size = new Size(91, 37);
             SectorLabel.TabIndex = 26;
@@ -259,7 +256,7 @@
             // 
             YearLabel.AutoSize = true;
             YearLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            YearLabel.Location = new Point(300, 218);
+            YearLabel.Location = new Point(300, 197);
             YearLabel.Name = "YearLabel";
             YearLabel.Size = new Size(198, 37);
             YearLabel.TabIndex = 25;
@@ -269,7 +266,7 @@
             // 
             PublisherLabel.AutoSize = true;
             PublisherLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            PublisherLabel.Location = new Point(29, 218);
+            PublisherLabel.Location = new Point(29, 197);
             PublisherLabel.Name = "PublisherLabel";
             PublisherLabel.Size = new Size(126, 37);
             PublisherLabel.TabIndex = 24;
@@ -279,7 +276,7 @@
             // 
             AuthorLabel.AutoSize = true;
             AuthorLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            AuthorLabel.Location = new Point(300, 77);
+            AuthorLabel.Location = new Point(300, 67);
             AuthorLabel.Name = "AuthorLabel";
             AuthorLabel.Size = new Size(98, 37);
             AuthorLabel.TabIndex = 23;
@@ -289,7 +286,7 @@
             // 
             NameLabel.AutoSize = true;
             NameLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            NameLabel.Location = new Point(29, 77);
+            NameLabel.Location = new Point(29, 67);
             NameLabel.Name = "NameLabel";
             NameLabel.Size = new Size(88, 37);
             NameLabel.TabIndex = 22;

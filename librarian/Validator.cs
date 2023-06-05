@@ -11,13 +11,17 @@
             }
             return text;
         }
+
         public static string Year_Validator(string year)
         {
-            int currentYear = DateTime.Now.Year;
-            if (!int.TryParse(year, out int parsedYear) || parsedYear > currentYear || year.Length > 4)
+            if (string.IsNullOrWhiteSpace(year) || year == "-")
             {
-                MessageBox.Show("The text must have 4 digits. Year must be lower than current.");
-                year = currentYear.ToString();
+                return year;
+            }
+            else if ((!int.TryParse(year, out int parsedYear) && !int.TryParse(year.TrimStart('-'), out parsedYear)) || year.Length > 6)
+            {
+                MessageBox.Show("The text must have 4-5 digits.");
+                year = DateTime.Now.Year.ToString();
             }
             else
             {
@@ -25,7 +29,6 @@
             }
             return year;
         }
-
         public static string Grade_Validator(string grade)
         {
             if(grade.ToCharArray().Any(c => !char.IsDigit(c)) || grade == null || grade == "")

@@ -1,4 +1,5 @@
 ﻿using static librarian.Positions.MyConstantsForWidgets;
+
 namespace librarian
 {
     internal class MyLabel : Label

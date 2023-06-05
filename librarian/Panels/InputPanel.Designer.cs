@@ -1,4 +1,6 @@
-﻿namespace librarian
+﻿using librarian.Genres;
+
+namespace librarian
 {
     partial class InputPanel
     {
@@ -117,7 +119,6 @@
             // GenreComboBox
             // 
             GenreComboBox.FormattingEnabled = true;
-            GenreComboBox.Items.AddRange(new object[] { "Fiction", "Novel", "Narrative", "Science fiction", "Mystery", "Fantasy", "Thriller", "Children's literature" });
             GenreComboBox.Location = new Point(38, 598);
             GenreComboBox.Name = "GenreComboBox";
             GenreComboBox.Size = new Size(198, 136);
@@ -138,7 +139,7 @@
             StatusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             StatusComboBox.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             StatusComboBox.FormattingEnabled = true;
-            StatusComboBox.Items.AddRange(new object[] { "Scheduled", "In progress", "Abandoned", "Read online" });
+            StatusComboBox.Items.AddRange(new object[] { "Scheduled", "In progress", "Abandoned", "Done" });
             StatusComboBox.Location = new Point(38, 510);
             StatusComboBox.Name = "StatusComboBox";
             StatusComboBox.Size = new Size(198, 45);
@@ -316,9 +317,9 @@
             AuthorLabel.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
             AuthorLabel.Location = new Point(29, 124);
             AuthorLabel.Name = "AuthorLabel";
-            AuthorLabel.Size = new Size(98, 37);
+            AuthorLabel.Size = new Size(109, 37);
             AuthorLabel.TabIndex = 2;
-            AuthorLabel.Text = "Author";
+            AuthorLabel.Text = "Authors";
             // 
             // NameLabel
             // 

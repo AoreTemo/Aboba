@@ -1,4 +1,4 @@
-﻿namespace librarian
+﻿namespace librarian.Forms
 {
     internal static class FormManager
     {
@@ -14,6 +14,7 @@
 
             return resultList;
         }
+
         public static void ControlSwitching(List<Control> list, bool value, Func<Control, bool> condition)
         {
             foreach (Control element in list.OfType<Control>().Where(condition).Cast<Control>())

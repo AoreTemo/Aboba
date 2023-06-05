@@ -1,7 +1,0 @@
-Date and Time of Save: 23.05.2023 22:12:18
-
-NameTextBox: 1
-AuthorTextBox: фыв
-
-Name of book | Author | Publisher | Year | Sector | Origin | Novelty | Genre of book | Grade | Status
-1 | фыв | сми | 4 | Scientific | Bought | On hand | Fiction, Mystery, Fantasy | 1 | Scheduled

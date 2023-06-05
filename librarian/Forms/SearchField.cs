@@ -4,81 +4,150 @@ public partial class SearchField : Form
 {
     private static List<BookPanel> SuitableBooks = new();
 
+    private Dictionary<Control, bool> searchFields = new();
+
     public SearchField()
     {
         InitializeComponent();
-        bookArea.Width = Width;
-        bookArea.AutoScroll = true;
+
+        BookArea.Width = Width;
+        BookArea.AutoScroll = true;
+        SearchButton.Enabled = false;
+        SaveToFileButton.Enabled = false;
+
         Resize += (s, ev) =>
         {
-            bookArea.Width = Width;
-            bookArea.Height = Height - bookArea.Location.Y;
+            if (WindowState == FormWindowState.Maximized)
+            {
+                HorizontalSeparatorPictureBox.Visible = false;
+
+                BookArea.Location = new (BookArea.Location.X, OriginComboBox.Bottom + 10);
+                SearchingInputPanel.Size = new(SaveToFileButton.Location.X - 20, Height);
+
+                BookArea.Size = new(SaveToFileButton.Location.X - 20, Height - BookArea.Location.Y - 20);
+
+                YearTextBox.Location = new (AuthorRadioButton.Right + (AuthorTextBox.Left - NameRadioButton.Right), AuthorTextBox.Top);
+                YearRadioButton.Location = new (YearTextBox.Right + (AuthorRadioButton.Left - AuthorTextBox.Right), AuthorRadioButton.Top);
+
+                GradeComboBox.Location = new (YearTextBox.Left, GenreTextBox.Top);
+                GradeRadioButton.Location = new (YearRadioButton.Left, GenreRadioButton.Top);
+
+                OriginComboBox.Location = new (YearTextBox.Left, NoveltyComboBox.Top);
+                OriginRadioButton.Location = new (YearRadioButton.Left, NoveltyRadioButton.Top);
+
+                SeparatorPictureBox.Size = new(3, Height);
+                SeparatorPictureBox.Location = new(SaveToFileButton.Location.X - 20, 0);
+            }
+            else if (WindowState == FormWindowState.Normal)
+            {
+                HorizontalSeparatorPictureBox.Visible = true;
+    
+                BookArea.Location = new (0, 446);
+                SearchingInputPanel.Size = new (930, 452);
+                BookArea.Size = new (1127, 382);
+
+                YearTextBox.Location = new (NameTextBox.Location.X, 359);
+                YearRadioButton.Location = new (NameRadioButton.Location.X, 376);
+
+                GradeComboBox.Location = new (483, 273);
+                GradeRadioButton.Location = new (887, 294);
+
+                OriginComboBox.Location = new (NameTextBox.Location.X, 273);
+                OriginRadioButton.Location = new Point(NameRadioButton.Location.X, 294);
+
+                SeparatorPictureBox.Location = new (931, 0);
+                SeparatorPictureBox.Size = new (3, 446);
+            }
+
+            Positioning.LocateBook(BookArea, SuitableBooks.OfType<Control>());
         };
-        bookArea.Resize += BookArea_Resize;
-        FormClosing += Search_FormClosing;
+    
+        FormClosing += SearchField_FormClosing;
+
+        foreach (TextBox control in SearchingInputPanel.Controls.OfType<TextBox>())
+            control.TextChanged += IsEnableToSearch;
+
+        foreach (ComboBox control in SearchingInputPanel.Controls.OfType<ComboBox>())
+            control.SelectedIndexChanged += IsEnableToSearch;
+
+        foreach (CheckBox control in SearchingInputPanel.Controls.OfType<CheckBox>())
+            control.CheckedChanged += IsEnableToSearch;
+
+        UpdateSearchFields();
     }
-    private void BookArea_Resize(object? sender, EventArgs e)
+
+    private void UpdateSearchFields()
     {
-        Form1.LocateBook(bookArea, SuitableBooks.OfType<Control>());
+        searchFields = new()
+        {
+            { NameTextBox, NameRadioButton.Checked },
+            { AuthorTextBox, AuthorRadioButton.Checked },
+            { PublisherTextBox, PublisherRadioButton.Checked },
+            { GenreTextBox, GenreRadioButton.Checked },
+            { YearTextBox, YearRadioButton.Checked },
+            { SectorComboBox, SectorRadioButton.Checked },
+            { OriginComboBox, OriginRadioButton.Checked },
+            { NoveltyComboBox, NoveltyRadioButton.Checked },
+            { GradeComboBox, GradeRadioButton.Checked }
+        };
     }
-    private void Search_FormClosing(object? sender, FormClosingEventArgs e)
+    private void SearchField_FormClosing(object? sender, FormClosingEventArgs e)
     {
         SuitableBooks.Clear();
         e.Cancel = true;
         Hide();
     }
+
     private void SearchButton_Click(object? sender, EventArgs e)
     {
-        bookArea.Controls.Clear();
+        UpdateSearchFields();
+        BookArea.Controls.Clear();
         GetSuitableBooks();
         AddBooksToPanel();
-        Form1.LocateBook(bookArea, SuitableBooks.OfType<Control>());
+        Positioning.LocateBook(BookArea, SuitableBooks.OfType<Control>());
     }
+
     private void GetSuitableBooks()
     {
-        Dictionary<Control, bool> keyValuePairs = new Dictionary<Control, bool>
-    {
-        { NameTextBox, NameRadioButton.Checked },
-        { AuthorTextBox, AuthorRadioButton.Checked },
-        { PublisherTextBox, PublisherRadioButton.Checked },
-        { GenreTextBox, GenreRadioButton.Checked },
-        { YearTextBox, YearRadioButton.Checked},
-        { SectorComboBox, SectorRadioButton.Checked },
-        { OriginComboBox, OriginRadioButton.Checked },
-        { NoveltyComboBox, NoveltyRadioButton.Checked },
-        { GradeComboBox, GradeRadioButton.Checked }
-    };
+        SaveToFileButton.Enabled = true;
+        List<BookPanel> filteredBooks = Books.GetBookPanelsCopy(BookArea);
 
-        List<BookPanel> filteredBooks = Books.GetBookPanelsCopy(bookArea);
+        foreach (var Book in filteredBooks)
+        {
+            Book.panel1.Controls.Remove(Book.editButton);
+            Book.moreButton.Location = new((Book.Width - Book.moreButton.Width) / 2, Book.moreButton.Location.Y);
+        }
 
-        foreach (var pair in keyValuePairs)
+        foreach (var pair in searchFields)
         {
             if (pair.Value && pair.Key is TextBoxBase textBox)
             {
                 if (pair.Key == GenreTextBox)
                 {
-                    filteredBooks = filteredBooks.Where(book =>
-                        CheckGenre(textBox.Text, book.book.GenreOfBook.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries))).ToList();
+                    filteredBooks = filteredBooks.Where(Book =>
+                        CheckGenre(textBox.Text, Book.Book.GenreOfBook.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries)))
+                        .ToList();
                 }
                 else if (pair.Key == AuthorTextBox)
                 {
-                    filteredBooks = filteredBooks.Where(book =>
-                        CheckAuthor(textBox.Text, book.book.Author.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries))).ToList();
+                    filteredBooks = filteredBooks.Where(Book =>
+                        CheckAuthor(textBox.Text, Book.Book.Author.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries)))
+                        .ToList();
                 }
                 else if (pair.Key == YearTextBox)
                 {
-                    filteredBooks = filteredBooks.Where(book => CheckYear(textBox.Text, book.book.Year)).ToList();
+                    filteredBooks = filteredBooks.Where(Book => CheckYear(textBox.Text, Book.Book.Year)).ToList();
                 }
                 else
                 {
                     string searchRequest = textBox.Text.Trim();
-                    Func<BookPanel, string>? bookProperty = null;
+                    Func<BookPanel, string>? BookProperty = null;
                     if (pair.Key == NameTextBox)
-                        bookProperty = book => book.book.NameOfBook;
+                        BookProperty = Book => Book.Book.NameOfBook;
                     else if (pair.Key == PublisherTextBox)
-                        bookProperty = book => book.book.Publisher;
+                        BookProperty = Book => Book.Book.Publisher;
 
-                    filteredBooks = filteredBooks.Where(book => bookProperty(book) == searchRequest).ToList();
+                    filteredBooks = filteredBooks.Where(Book => BookProperty(Book) == searchRequest).ToList();
                 }
             }
             else if (pair.Value && pair.Key is ComboBox comboBox)
@@ -86,26 +155,25 @@ public partial class SearchField : Form
                 string searchRequest = comboBox.Text.Trim();
                 if (pair.Key == OriginComboBox)
                 {
-                    filteredBooks = filteredBooks.Where(book => book.book.Origin == searchRequest).ToList();
+                    filteredBooks = filteredBooks.Where(Book => Book.Book.Origin == searchRequest).ToList();
                 }
                 else if (pair.Key == NoveltyComboBox)
                 {
-                    filteredBooks = filteredBooks.Where(book => book.book.Novelty == searchRequest).ToList();
+                    filteredBooks = filteredBooks.Where(Book => Book.Book.Novelty == searchRequest).ToList();
                 }
                 else if (pair.Key == GradeComboBox)
                 {
-                    filteredBooks = filteredBooks.Where(book => book.book.Grade == searchRequest).ToList();
+                    filteredBooks = filteredBooks.Where(Book => Book.Book.Grade == searchRequest).ToList();
                 }
                 else if (pair.Key == SectorComboBox)
                 {
-                    filteredBooks = filteredBooks.Where(book => book.book.Sector == searchRequest).ToList();
+                    filteredBooks = filteredBooks.Where(Book => Book.Book.Sector == searchRequest).ToList();
                 }
             }
         }
 
         SuitableBooks = filteredBooks;
     }
-
 
     private bool CheckYear(string year, string searchRequest)
     {
@@ -146,7 +214,8 @@ public partial class SearchField : Form
 
         return false;
     }
-    private bool CheckGenre(string genre, string[] bookGenres)
+
+    private bool CheckGenre(string genre, string[] BookGenres)
     {
         if (string.IsNullOrEmpty(genre))
             return true;
@@ -155,74 +224,104 @@ public partial class SearchField : Form
 
         if (searchGenres.Length == 1)
         {
-            return bookGenres.Contains(searchGenres[0]);
+            return BookGenres.Contains(searchGenres[0]);
         }
         else if (searchGenres.Length == 2)
         {
-            return bookGenres.Contains(searchGenres[0]) && bookGenres.Contains(searchGenres[1]);
+            return BookGenres.Contains(searchGenres[0]) && BookGenres.Contains(searchGenres[1]);
         }
 
         return false;
     }
 
-
-    private bool CheckAuthor(string author, string[] bookAuthors)
+    private bool CheckAuthor(string author, string[] BookAuthors)
     {
         if (string.IsNullOrEmpty(author))
             return true;
 
         string[] searchAuthors = author.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
-        return searchAuthors.All(searchAuthor => bookAuthors.Contains(searchAuthor));
+        return searchAuthors.All(searchAuthor => BookAuthors.Contains(searchAuthor));
     }
-
 
     private void AddBooksToPanel()
     {
-        foreach (BookPanel book in SuitableBooks)
-            bookArea.Controls.Add(book);
+        foreach (BookPanel Book in SuitableBooks)
+            BookArea.Controls.Add(Book);
     }
+
     private void SaveToFileButton_Click(object sender, EventArgs e)
     {
+        UpdateSearchFields();
         string filePath = $"{DateTime.Now:yyyyMMdd_HHmmss}.txt";
 
         using StreamWriter writer = new(filePath);
         writer.WriteLine($"Date and Time of Save: {DateTime.Now}");
         writer.WriteLine();
 
-        Dictionary<Control, bool> keyValuePairs = new()
+        foreach (var pair in searchFields)
         {
-            { NameTextBox, NameRadioButton.Checked },
-            { AuthorTextBox, AuthorRadioButton.Checked },
-            { PublisherTextBox, PublisherRadioButton.Checked },
-            { GenreTextBox, GenreRadioButton.Checked },
-            { YearTextBox, YearRadioButton.Checked},
-            { SectorComboBox, SectorRadioButton.Checked },
-            { OriginComboBox, OriginRadioButton.Checked },
-            { NoveltyComboBox, NoveltyRadioButton.Checked },
-            { GradeComboBox, GradeRadioButton.Checked }
-        };
+            if (!pair.Value)
+                continue;
 
-        foreach (var pair in keyValuePairs)
-        {
-            if (pair.Value && pair.Key is TextBoxBase textBox)
+            string keyName = pair.Key.Name;
+
+            if (string.IsNullOrEmpty(keyName))
+                continue;
+
+            int capitalIndex = 0;
+            for (int i = 1; i < keyName.Length; i++)
             {
-                writer.WriteLine($"{pair.Key.Name}: {textBox.Text}");
+                if (!char.IsUpper(keyName[i]))
+                    continue;
+
+                capitalIndex = i;
+                break;
             }
-            else if (pair.Value && pair.Key is ComboBox comboBox)
-            {
-                writer.WriteLine($"{pair.Key.Name}: {comboBox.Text}");
-            }
+
+            if (capitalIndex > 0)
+                keyName = keyName.Substring(0, capitalIndex);
+
+            writer.WriteLine($"{keyName}: {pair.Key.Text}");
         }
+
 
         writer.WriteLine();
-        writer.WriteLine("Name of book | Author | Publisher | Year | Sector | Origin | Novelty | Genre of book | Grade | Status");
 
-        foreach (var book in SuitableBooks)
+        foreach (var Book in SuitableBooks)
         {
-            string line = $"{book.book.NameOfBook} | {book.book.Author} | {book.book.Publisher} | {book.book.Year} | " +
-                          $"{book.book.Sector} | {book.book.Origin} | {book.book.Novelty} | {book.book.GenreOfBook} | " +
-                          $"{book.book.Grade} | {book.book.Status}";
-            writer.WriteLine(line);
+            writer.WriteLine("Name of Book: " + Book.Book.NameOfBook);
+            writer.WriteLine("Author: " + Book.Book.Author);
+            writer.WriteLine("Publisher: " + Book.Book.Publisher);
+            writer.WriteLine("Year: " + Book.Book.Year);
+            writer.WriteLine("Sector: " + Book.Book.Sector);
+            writer.WriteLine("Origin: " + Book.Book.Origin);
+            writer.WriteLine("Novelty: " + Book.Book.Novelty);
+            writer.WriteLine("Genre of Book: " + Book.Book.GenreOfBook);
+            writer.WriteLine("Grade: " + Book.Book.Grade);
+            writer.WriteLine("Status: " + Book.Book.Status);
+            writer.WriteLine("\n");
         }
+    }
+
+    private void IsEnableToSearch(object? sender, EventArgs e)
+    {
+        UpdateSearchFields();
+        bool isEnable = false;
+
+        foreach (var pair in searchFields)
+        {
+            if (!pair.Value)
+                continue;
+
+            if (string.IsNullOrEmpty(pair.Key.Text))
+            {
+                isEnable = false;
+                break;
+            }
+
+            isEnable = true;
+        }
+
+        SearchButton.Enabled = isEnable;
     }
 }
